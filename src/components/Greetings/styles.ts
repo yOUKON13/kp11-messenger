@@ -24,7 +24,7 @@ export const Container = styled.div`
 
 export const Image = styled.img`
   width: 240px;
-  animation: ${rotate} 15s linear infinite;
+  animation: ${rotate} 0.1s linear infinite;
 `
 
 export const Text = styled.p`

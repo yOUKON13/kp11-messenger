@@ -1,0 +1,147 @@
+.input-container {
+  width: 50em;
+  margin-bottom: 2em;
+
+  p {
+    padding: 0 0 0 0.5em;
+    font-size: 1.75rem;
+    color: red;
+  }
+  .input-outer {
+    border-radius: 5em;
+    border: double 1px transparent;
+    background-image: linear-gradient(#2b2e34, #2b2e34),
+      linear-gradient(
+        90deg,
+        rgba(255, 139, 40, 1) 0%,
+        rgba(247, 45, 23, 1) 100%
+      );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    &.error {
+      border: 1px red solid;
+    }
+
+    div {
+      margin: 0.75em 0.5em 0.75em 1em;
+    }
+
+    .right {
+      margin-right: 0.5em;
+    }
+
+    input {
+      font-weight: 300;
+      font-size: 2rem;
+      background: transparent;
+      color: #fff;
+      border: none;
+      width: 100%;
+      outline: none;
+    }
+  }
+}
+
+.checkbox-container {
+  user-select: none;
+
+  input {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    font: inherit;
+    width: 2.5em;
+    height: 2.5em;
+    border: 0.3em solid #fff;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+    margin-right: 1em;
+    display: grid;
+    place-content: center;
+
+    &::before {
+      content: '';
+      width: 1.25em;
+      height: 1.25em;
+      transform: scale(0);
+      transition: 0.3s transform ease-in-out;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    &:checked::before {
+      transform: scale(1);
+    }
+  }
+
+  label {
+    cursor: pointer;
+    font-size: 2.25rem;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 139, 40, 1) 0%,
+      rgba(247, 45, 23, 1) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+  }
+}
+
+button,
+.button {
+  font-weight: 400;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  font-size: 3.5rem;
+  padding: 0.25em 2em;
+  border-radius: 5em;
+  border: none;
+  margin-bottom: 1em;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 139, 40, 1) 0%,
+    rgba(247, 45, 23, 1) 100%
+  );
+  position: relative;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    border-radius: 5em;
+    transition: 0.3s background ease-in-out;
+  }
+
+  &:hover {
+    &::after {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.invisible-button {
+  padding: 0;
+  margin: 0;
+  background: none;
+
+  &:hover {
+    &::after {
+      background: none;
+    }
+  }
+}
+
+.gray-button {
+  background: linear-gradient(270deg, #434343 -15.22%, #7b7b7b 100%);
+}

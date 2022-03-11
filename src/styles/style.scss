@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--main-bg);
+  height: 100vh;
+  overflow: hidden;
+  font-size: 10px;
+
+  position: relative;
+
+  --main-bg: #2b2e34;
+
+  --second-text: #5f5f5f;
+
+  --tolbar-bg: #232426;
+  --tolbar-bg--hover: #191919;
+  --dark-red: #5a0900;
+}
+
+body,
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  padding: 10em 5em;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@import 'typography';
+@import 'inputs';

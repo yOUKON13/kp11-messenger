@@ -1,12 +1,12 @@
-import './../../../styles/login.scss';
-import Input from '../../Inputs/Input';
-import Checkbox from '../../Inputs/Checkbox';
-import { Link } from 'react-router-dom';
-import Password from '../../Inputs/Password';
+import '../../../styles/pages/login.scss';
+import Input from '../../Common/Inputs/Input';
+import Checkbox from '../../Common/Inputs/Checkbox';
+import { Link, useHistory } from 'react-router-dom';
+import Password from '../../Common/Inputs/Password';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Login as LoginF } from '../../../store/reducers/AuthReducer';
-import Loader from '../../Loader/Loader';
+import { Login as LoginF } from '../../../store/reducers/Auth/AuthReducer';
+import Loader from '../../Common/Loader/Loader';
 import {
   maxLength,
   minLength,
@@ -15,10 +15,12 @@ import {
   validate,
 } from '../../../utils/validation';
 import { GetLoadingStatus } from '../../../store/reducers/App/AppSelector';
+import useAuth from '../../../hooks/useAuth';
 
 function Login() {
   const dispatch = useDispatch();
   const isLoading = useSelector(GetLoadingStatus);
+  useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -26,14 +28,14 @@ function Login() {
       password: '',
     },
     validate: values => {
-      const error = {};
+      const error: any = {};
 
       error.login = validate(values.login, [
         required(),
         minLength(3),
         maxLength(32),
       ]);
-      error.password = validate(values.password, [required()]);
+      error.password = validate(values.password, [required(), minLength(6)]);
       removeEmptyValidators(error);
       return error;
     },
@@ -44,24 +46,28 @@ function Login() {
   });
 
   return (
-    <div className="login">
+    <div className="login page-container">
       <form onSubmit={formik.handleSubmit} className="login__form">
         <h1 className="login__title">Вход</h1>
         <Input
           name="login"
           error={formik.errors.login}
+          touched={formik.touched.login}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.login}
           placeholder="Логин"
         >
-          <span className="material-icons">person</span>
+          <i className="fa-solid fa-user" />
         </Input>
         <Password
           error={formik.errors.password}
+          touched={formik.touched.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.password}
         >
-          <span className="material-icons">lock</span>
+          <i className="fa-solid fa-lock" />
         </Password>
         <div className="flex-container login__actions">
           <Checkbox label="Запомнить" />

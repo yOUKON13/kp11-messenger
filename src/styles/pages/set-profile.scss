@@ -1,0 +1,92 @@
+@import '../mixins';
+
+.set-profile {
+  justify-content: flex-start;
+  padding: 10em 10em;
+
+  h1 {
+    text-align: left;
+  }
+
+  &__avatar {
+    width: 22.5em;
+    height: 22.5em;
+    margin-right: 2em;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    button {
+      position: absolute;
+      top: 72%;
+      left: 72%;
+      justify-content: center;
+      border-radius: 50%;
+      padding: 0 !important;
+      width: 1.75em;
+      height: 1.75em;
+    }
+
+    @include gradient;
+  }
+
+  &__top-block {
+    margin-bottom: 5.7em;
+  }
+
+  &__bottom-block {
+    margin-bottom: 15em;
+    align-items: flex-start;
+    .input-container {
+      width: auto;
+      flex: 1;
+
+      p {
+        max-width: 25em;
+      }
+
+      &:first-child {
+        margin-right: 2em;
+      }
+    }
+  }
+
+  &__buttons {
+    *:first-child {
+      margin-right: 1em;
+    }
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .set-profile {
+    &__bottom-block {
+      margin-bottom: 6em;
+    }
+  }
+}
+
+@media screen and (max-height: 650px) and (min-width: 900px) {
+  .set-profile {
+    &__bottom-block {
+      margin-bottom: 4em;
+    }
+  }
+}
+
+@media screen and (max-height: 850px) and (min-width: 1200px) {
+  .set-profile {
+    &__bottom-block {
+      margin-bottom: 3em;
+    }
+  }
+}
+
+@media screen and (max-height: 700px) and (min-width: 1200px) {
+  .set-profile {
+    padding: 2em 10em;
+  }
+}

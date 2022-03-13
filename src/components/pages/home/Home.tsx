@@ -1,7 +1,26 @@
-import { Link } from 'react-router-dom';
-import '../../../styles/home.scss';
+import { Link, useHistory } from 'react-router-dom';
+import '../../../styles/pages/home.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Auth } from '../../../store/reducers/Auth/AuthReducer';
+import Loader from '../../Common/Loader/Loader';
+import useAuth from '../../../hooks/useAuth';
+import { GetLoadingStatus } from '../../../store/reducers/App/AppSelector';
 
 function Home() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(GetLoadingStatus);
+
+  useAuth();
+
+  useEffect(() => {
+    dispatch(Auth());
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="home flex-container">
       <div

@@ -1,13 +1,9 @@
 import instance, { newHeaders, Response } from '../base';
-import { LoginUser, RegisterUser } from '../../types/User';
+import { LoginUser, Profile, RegisterUser, User } from '../../types/User';
 
 type UserResponse = {
   status: string;
-  data: {
-    email: string;
-    login: string;
-    token: string;
-  };
+  data: User;
 };
 
 const UsersAPI = {
@@ -16,6 +12,13 @@ const UsersAPI = {
   },
   login(values: LoginUser): Promise<Response<UserResponse>> {
     return instance.post('/users/login', values, { headers: newHeaders() });
+  },
+  auth(): Promise<Response<UserResponse>> {
+    return instance.post('/users/auth', {}, { headers: newHeaders() });
+  },
+
+  createProfile(values: Profile): Promise<Response<UserResponse>> {
+    return instance.post('/users/profile', values, { headers: newHeaders() });
   },
 };
 

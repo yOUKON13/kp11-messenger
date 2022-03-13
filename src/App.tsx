@@ -5,7 +5,10 @@ import Register from './components/pages/register/Register';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import Index from './components/pages/home/Home';
-import Toolbar from './components/Toolbar/Toolbar';
+import Toolbar from './components/Layout/Toolbar/Toolbar';
+import Main from './components/pages/main/Main';
+import SetProfile from './components/pages/set-profile/SetProfile';
+import Messages from './components/pages/messages/Messages';
 
 export function App() {
   return (
@@ -19,6 +22,15 @@ export function App() {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/main">
+              <Main />
+            </Route>
+            <Route path="/set-profile">
+              <SetProfile />
+            </Route>
+            <Route path="/messages">
+              <Messages />
             </Route>
             <Route path="/">
               <Index />

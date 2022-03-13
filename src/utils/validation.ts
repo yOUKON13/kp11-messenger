@@ -18,6 +18,16 @@ export function maxLength(count: number) {
   };
 }
 
+export function length(count: number) {
+  return function (value: string) {
+    return value.length && value.length !== count
+      ? `Длина поля должна составлять ${count} ${
+          count % 10 < 5 ? 'символа' : 'символов'
+        }`
+      : undefined;
+  };
+}
+
 export function required() {
   return function (value: string) {
     return value ? undefined : `Это обязательное поле`;

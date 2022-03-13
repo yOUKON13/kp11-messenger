@@ -1,0 +1,79 @@
+.message-window-wrapper {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s opacity ease-in-out;
+
+  &.scrollable .message-window {
+    overflow-y: auto;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: visible;
+
+    .message-window {
+      transform: scale(1);
+
+      &__panel,
+      &__content {
+        visibility: visible;
+      }
+    }
+  }
+
+  .message-window {
+    background: #242629f7;
+    background-size: 60%;
+    padding: 3em;
+    border-radius: 4em;
+    max-width: 100vw;
+    min-width: 35em;
+    max-height: 100vh;
+    transform: scale(0.3);
+
+    transition: 0.3s all ease-in-out;
+
+    &__content {
+      visibility: hidden;
+    }
+  }
+}
+
+.window-part {
+  visibility: hidden;
+
+  &.active {
+    visibility: visible;
+  }
+}
+
+.window-buttons {
+  justify-content: flex-end !important;
+
+  button {
+    font-size: 2.8rem;
+
+    &:first-child {
+      margin-right: 1em;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .message-window {
+    transform: scale(1.3) !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .message-window {
+    transform: scale(1) !important;
+  }
+}

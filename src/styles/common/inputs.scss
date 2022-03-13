@@ -45,6 +45,10 @@
       left: 88%;
     }
 
+    .right + input {
+      padding-right: 3em;
+    }
+
     input {
       font-weight: 300;
       font-size: 2rem;
@@ -75,19 +79,23 @@
     margin-right: 1em;
     display: grid;
     place-content: center;
+    position: relative;
 
     &::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       content: '';
       width: 1.25em;
       height: 1.25em;
-      transform: scale(0);
+      transform: translate(-50%, -50%) scale(0);
       transition: 0.3s transform ease-in-out;
       background: #fff;
       border-radius: 50%;
     }
 
     &:checked::before {
-      transform: scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
   }
 

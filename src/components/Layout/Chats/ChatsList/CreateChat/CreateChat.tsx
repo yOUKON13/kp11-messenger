@@ -20,10 +20,6 @@ type PropType = {
 const CreateChat: React.FC<PropType> = function ({ isOpened, toggleOpen }) {
   const dispatch = useDispatch();
 
-  function close() {
-    toggleOpen(false);
-  }
-
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -47,6 +43,11 @@ const CreateChat: React.FC<PropType> = function ({ isOpened, toggleOpen }) {
       return error;
     },
   });
+
+  function close() {
+    formik.resetForm();
+    toggleOpen(false);
+  }
 
   return (
     <MessageWindow toggleOpen={toggleOpen} isOpened={isOpened}>

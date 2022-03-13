@@ -19,7 +19,7 @@ const Chats: React.FC<PropType> = function ({
   }
 
   return (
-    <div className="main__left">
+    <div className="main__left flex-container">
       <div className="main__left-header flex-container">
         <button className="invisible-button main__messages-btn flex-container">
           Сообщения
@@ -29,7 +29,7 @@ const Chats: React.FC<PropType> = function ({
           <p>{chatsCount}</p>
         </div>
         <button onClick={open} className="main__chat-create">
-          <span className="material-icons-outlined">add</span>
+          +
         </button>
       </div>
       <div className="main__content flex-container">

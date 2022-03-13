@@ -22,7 +22,7 @@ html {
   background: var(--main-bg);
   height: 100vh;
   overflow: hidden;
-  font-size: 10px;
+  font-size: 8px;
 
   position: relative;
 
@@ -66,18 +66,6 @@ body {
 .page-container {
   padding: 10em 5em;
   align-self: center;
-}
-
-@media screen and (max-width: 1200px) {
-  html {
-    font-size: 9px;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  html {
-    font-size: 8px;
-  }
 }
 
 @media screen and (max-width: 600px) {

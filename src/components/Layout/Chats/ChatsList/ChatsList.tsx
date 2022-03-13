@@ -53,17 +53,20 @@ function ChatsList() {
   return (
     <div className="main__chats" ref={scrollable}>
       <ChatSearch setSearch={setSearch} search={search} />
-      {chats.map(chat => {
-        return (
-          <Chat
-            id={chat._id}
-            key={chat._id}
-            lastMessage="стив хуйс"
-            lastMessageTime={new Date(Date.now())}
-            name={chat.name}
-          />
-        );
-      })}
+      <div className="main__scrollable-chats">
+        {chats.map(chat => {
+          return (
+            <Chat
+              id={chat._id}
+              key={chat._id}
+              lastMessage="стив хуйс"
+              lastMessageTime={new Date(Date.now())}
+              name={chat.name}
+            />
+          );
+        })}
+      </div>
+
       {isLoading && <Loader />}
     </div>
   );

@@ -16,13 +16,14 @@ const Chat: React.FC<PropType> = function ({
   lastMessageTime,
 }) {
   function onClick(event: Event) {
+    console.log(228);
     event.stopPropagation();
   }
 
   return (
     <div className="chats__chat">
       <Link to={`/messages/${id}`} className="invisible-button  flex-container">
-        <img src={imgUrl || '/assets/avatar.png'} alt="" />
+        <img src={imgUrl || 'assets/avatar.png'} alt="" />
         <div className="chat__info">
           <p className="chat__name">{name}</p>
           {lastMessage && <p className="chat__last-message">{lastMessage}</p>}

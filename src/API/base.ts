@@ -15,7 +15,7 @@ export function newHeaders() {
 }
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/',
+  baseURL: 'http://26.26.228.204:8080/',
 });
 
 export default instance;

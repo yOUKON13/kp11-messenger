@@ -57,13 +57,18 @@
   }
 
   &__chat-create {
-    padding: 0.25em;
+    border-radius: 50%;
+    font-size: 4.5rem;
+    padding: 0.3em;
+    line-height: 0.6;
     margin: 0;
   }
 
   &__left {
     border-right: 2px solid var(--tolbar-bg);
     height: calc(100vh - 30px);
+    flex-direction: column;
+    padding: 1em 1.25em 1em 1em;
   }
 
   &__messages-btn {
@@ -79,15 +84,21 @@
     align-items: flex-start;
   }
 
-  &__content {
-    justify-content: flex-start;
-    align-items: stretch;
-    height: calc(100vh - 30px - 9em);
+  &__chats {
+    width: 100%;
   }
 
-  &__chats {
-    padding: 1em;
+  &__content {
+    justify-content: stretch;
+    align-items: stretch;
+    height: calc(100vh - 30px - 9em);
+    width: 100%;
+  }
+
+  &__scrollable-chats {
+    padding: 1em 1.25em 1em 1em;
     overflow-y: auto;
+    height: calc(100vh - 30px - 15em);
 
     &::-webkit-scrollbar-track {
       background: transparent;
@@ -109,7 +120,7 @@
     background: var(--second-bg);
     padding: 0.75em 1em;
     border-radius: 0.75em;
-    width: 32em;
+    margin-bottom: 1em;
   }
 
   .chats__chat {

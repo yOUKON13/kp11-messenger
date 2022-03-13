@@ -40,6 +40,20 @@ const Password: React.FC<PropType> = function ({
         <div className="left">{children}</div>
         <div className="input-with-error">
           {errorShow && <p>{error}</p>}
+          <button
+            tabIndex="-1"
+            type="button"
+            onClick={setVisibility}
+            className="invisible-button right"
+          >
+            <span className="material-icons-outlined">
+              {currentVis ? (
+                <i className="fa-solid fa-eye-slash" />
+              ) : (
+                <i className="fa-solid fa-eye" />
+              )}
+            </span>
+          </button>
           <input
             onFocus={onFocus}
             onBlur={blur}
@@ -50,24 +64,6 @@ const Password: React.FC<PropType> = function ({
             className="input"
             placeholder={!errorShow ? 'Пароль' : ''}
           />
-          {!errorShow && (
-            <button
-              type="button"
-              onClick={setVisibility}
-              className="invisible-button right"
-            >
-              <span className="material-icons-outlined">
-                {currentVis ? (
-                  <i
-                    className="fa-solid fa-eye-slash"
-                    style={{ fontSize: '2.9rem' }}
-                  />
-                ) : (
-                  <i className="fa-solid fa-eye" />
-                )}
-              </span>
-            </button>
-          )}
         </div>
       </div>
     </div>

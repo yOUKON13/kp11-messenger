@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import Navlink from './Navlink/Navlink';
 import LogoutWindow from './LogoutWindow/LogoutWindow';
+import { useSelector } from 'react-redux';
+import { GetChats } from '../../../store/reducers/Chat/ChatSelector';
+import SettingsWindow from './SettingsWindows/SettingsWindow';
 
 function Navbar() {
   const [isLogoutWindowOpened, setLogoutWindowOpened] = useState(false);
+  const [isSettingsWindowOpened, setSettingsWindowOpened] = useState(false);
+  const chats = useSelector(GetChats);
 
   function openLogoutWindow() {
     setLogoutWindowOpened(true);
+  }
+
+  function openSettingsWindow() {
+    setSettingsWindowOpened(true);
   }
 
   return (
@@ -18,7 +27,10 @@ function Navbar() {
         <Navlink to="/main">
           <i className="fa-regular fa-house" />
         </Navlink>
-        <Navlink to="/messages">
+        <Navlink
+          checkUrl="/messages"
+          to={`/messages/${chats.length ? chats[0]?._id : ''}`}
+        >
           <i className="fa-regular fa-comment" />
         </Navlink>
         <Navlink to="/search">
@@ -30,13 +42,17 @@ function Navbar() {
         >
           <i className="fa-regular fa-arrow-right-from-bracket" />
         </button>
-        <Navlink to="/settings">
+        <button onClick={openSettingsWindow} className="invisible-button">
           <i className="fa-regular fa-gear" />
-        </Navlink>
+        </button>
       </nav>
       <LogoutWindow
         isOpened={isLogoutWindowOpened}
         setOpened={setLogoutWindowOpened}
+      />
+      <SettingsWindow
+        toggleOpen={setSettingsWindowOpened}
+        isOpened={isSettingsWindowOpened}
       />
     </>
   );

@@ -1,11 +1,11 @@
-import { LoginUser, Profile, RegisterUser, User } from '../../../types/User';
+import { LoginUser, Profile, RegisterUser, UpdateProfile, User } from '../../../types/User';
 import UsersAPI from '../../../API/UsersAPI/UsersAPI';
 import { Dispatch, Reducer } from 'redux';
 import ActionsType from '../Types';
-import { AppActions } from '../App/AppReducer';
-import { useHistory } from 'react-router-dom';
+import { AppActions, CreateMessage } from '../App/AppReducer';
+import catchAsync from '../../../../server/utils/catchAsync';
 
-const SET_USER = 'Messenger/Auth/SET_USER';
+const SET_USER = 'Messenger/Auth/SET-USER';
 
 const initState = {
   user: null as User | null,
@@ -14,10 +14,7 @@ type AuthStateType = typeof initState;
 
 type Actions = ActionsType<typeof AuthActions>;
 
-const AuthReducer: Reducer<AuthStateType, Actions> = function (
-  state = initState,
-  action
-) {
+const AuthReducer: Reducer<AuthStateType, Actions> = function (state = initState, action) {
   switch (action.type) {
     case SET_USER:
       return {
@@ -36,62 +33,69 @@ export const AuthActions = {
 };
 
 export function Login(formValues: LoginUser) {
-  return async function (dispatch: Dispatch) {
+  return catchAsync(async (dispatch, getState) => {
     dispatch(AppActions.setLoading(true));
 
-    try {
-      const result = await UsersAPI.login(formValues);
-      if (result.data.status) {
-        localStorage.setItem('token', result.data.data.token);
-        dispatch(AuthActions.setUser(result.data.data));
-      }
-    } catch (e) {}
-
-    dispatch(AppActions.setLoading(false));
-  };
+    const result = await UsersAPI.login(formValues);
+    if (result.data.status) {
+      localStorage.setItem('token', result.data.data.token);
+      dispatch(AuthActions.setUser(result.data.data));
+    }
+  });
 }
 
 export function Register(formValues: RegisterUser) {
-  return async function (dispatch: Dispatch) {
+  return catchAsync(async (dispatch, getState) => {
     dispatch(AppActions.setLoading(true));
-    try {
-      const result = await UsersAPI.register(formValues);
-      if (result.data.status) {
-        localStorage.setItem('token', result.data.data.token);
-        dispatch(AuthActions.setUser(result.data.data));
-      }
-    } catch (e) {}
 
-    dispatch(AppActions.setLoading(false));
-  };
+    const result = await UsersAPI.register(formValues);
+    if (result.data.status) {
+      localStorage.setItem('token', result.data.data.token);
+      dispatch(AuthActions.setUser(result.data.data));
+    }
+  });
 }
 
 export function Auth() {
-  return async function (dispatch: Dispatch) {
+  return async (dispatch: Dispatch) => {
     dispatch(AppActions.setLoading(true));
+
     try {
       const result = await UsersAPI.auth();
       if (result.data.status) {
         dispatch(AuthActions.setUser(result.data.data));
       }
     } catch (e) {}
+
     dispatch(AppActions.setLoading(false));
   };
 }
 
 export function CreateProfile(values: Profile) {
-  return async function (dispatch: Dispatch) {
+  return catchAsync(async (dispatch, getState) => {
     dispatch(AppActions.setLoading(true));
 
-    try {
-      const result = await UsersAPI.createProfile(values);
-      if (result.data.status) {
-        dispatch(AuthActions.setUser(result.data.data));
-      }
-    } catch (e) {}
+    const result = await UsersAPI.createProfile(values);
+    if (result.data.status) {
+      dispatch(AuthActions.setUser(result.data.data));
+    }
+  });
+}
 
-    dispatch(AppActions.setLoading(false));
-  };
+export function UpdateProfileF(values: UpdateProfile) {
+  return catchAsync(async (dispatch, getState) => {
+    dispatch(AppActions.setLoading(true));
+
+    const result = await UsersAPI.updateProfile(values);
+    if (result.data.status) {
+      dispatch(AuthActions.setUser(result.data.data));
+
+      if (result.data.data.token) {
+        localStorage.setItem('token', result.data.data.token);
+      }
+      dispatch(CreateMessage('Профиль успешно обновлен!', false));
+    }
+  });
 }
 
 export function Logout() {

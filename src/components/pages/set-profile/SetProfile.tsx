@@ -1,113 +1,48 @@
-import { useFormik } from 'formik';
-import Input from '../../Common/Inputs/Input';
 import '../../../styles/pages/set-profile.scss';
-import {
-  length,
-  maxLength,
-  removeEmptyValidators,
-  required,
-  validate,
-} from '../../../utils/validation';
-import {
-  AuthActions,
-  CreateProfile,
-} from '../../../store/reducers/Auth/AuthReducer';
+import { AuthActions } from '../../../store/reducers/Auth/AuthReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth/useAuth';
 import { GetLoadingStatus } from '../../../store/reducers/App/AppSelector';
 import Loader from '../../Common/Loader/Loader';
 import { useHistory } from 'react-router-dom';
+import SetAvatar from '../../Common/Inputs/SetAvatar';
+import NameField from './NameField/NameField';
+import SurnameField from './SurnameField/SurnameField';
+import PhoneField from './PhoneField/PhoneField';
+import GroupField from './GroupField/GroupField';
+import useSetProfileForm from './useSetProfileForm';
+import { useState } from 'react';
 
 function SetProfile() {
   const dispatch = useDispatch();
   const isLoading = useSelector(GetLoadingStatus);
   const history = useHistory();
+  const [file, setFile] = useState({});
+
+  const formik = useSetProfileForm(file);
+
   useAuth();
 
   function goBack() {
     dispatch(AuthActions.setUser(null));
+    localStorage.removeItem('token');
     history.push('/');
   }
-
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      surname: '',
-      phoneNumber: '',
-      group: '',
-    },
-    validate: values => {
-      const error: any = {};
-
-      error.name = validate(values.name, [required(), maxLength(64)]);
-      error.surname = validate(values.surname, [maxLength(128)]);
-      error.phoneNumber = validate(values.phoneNumber.toString(), [length(11)]);
-      error.group = validate(values.group, [required(), maxLength(32)]);
-      removeEmptyValidators(error);
-      return error;
-    },
-    onSubmit: values => {
-      dispatch(CreateProfile(values));
-      formik.resetForm();
-    },
-  });
 
   return (
     <div className="page-container set-profile">
       <h1>Ваш профиль</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="set-profile__top-block flex-container">
-          <div className="set-profile__avatar">
-            <img src="./assets/avatar.png" alt="" />
-            <button>
-              <i className="fa-light fa-pencil"></i>
-            </button>
-          </div>
+          <SetAvatar file={file} setFile={setFile} />
           <div>
-            <Input
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.name}
-              error={formik.errors.name}
-              touched={formik.touched.name}
-              name="name"
-              placeholder="Имя*"
-            />
-            <Input
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.surname}
-              error={formik.errors.surname}
-              touched={formik.touched.surname}
-              name="surname"
-              placeholder="Фамилия"
-            />
+            <NameField formik={formik} isRequired />
+            <SurnameField formik={formik} />
           </div>
         </div>
         <div className="set-profile__bottom-block flex-container">
-          <Input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phoneNumber}
-            error={formik.errors.phoneNumber}
-            touched={formik.touched.phoneNumber}
-            name="phoneNumber"
-            placeholder="Телефон"
-            inputType="number"
-          >
-            <i className="fa-regular fa-phone" />
-          </Input>
-          <Input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.group}
-            error={formik.errors.group}
-            touched={formik.touched.group}
-            name="group"
-            placeholder="Группа*"
-          >
-            <i className="fa-regular fa-user-group" />
-          </Input>
+          <PhoneField formik={formik} />
+          <GroupField formik={formik} isRequired />
         </div>
 
         <div className="set-profile__buttons flex-container">

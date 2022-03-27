@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Notification } from 'electron';
 import * as path from 'path';
 
 let mainWindow: BrowserWindow | null;
@@ -21,6 +21,7 @@ function createWindow() {
     autoHideMenuBar: true,
     frame: false,
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: false,
       contextIsolation: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -33,10 +34,22 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  mainWindow.on('resize', () => {
+    mainWindow!.webContents.send('resize', mainWindow?.isMaximized());
+  });
+
+  mainWindow.on('focus', () => {
+    mainWindow!.webContents.send('focus', true);
+  });
+
+  mainWindow.on('blur', () => {
+    mainWindow!.webContents.send('focus', false);
+  });
 }
 
 async function registerListeners() {
-  ipcMain.on('message', (_, message: string) => {
+  ipcMain.on('message', (_, message: string, data: any) => {
     switch (message) {
       case 'close':
         mainWindow?.close();

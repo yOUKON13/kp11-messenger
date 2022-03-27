@@ -1,5 +1,7 @@
 import '../../../styles/common/toolbar.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Auth } from '../../../store/reducers/Auth/AuthReducer';
 
 function Toolbar() {
   const [isMaximized, setMaximized] = useState(false);
@@ -16,6 +18,15 @@ function Toolbar() {
     window.Main.sendMessage('maximize');
     setMaximized(!isMaximized);
   }
+
+  window.Main.on('resize', (value: boolean) => {
+    setMaximized(value);
+  });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(Auth());
+  }, []);
 
   return (
     <div className="toolbar flex-container">

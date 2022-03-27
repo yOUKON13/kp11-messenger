@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { GetUser } from '../store/reducers/Auth/AuthSelector';
+import { GetUser } from '../../store/reducers/Auth/AuthSelector';
 import { useHistory } from 'react-router-dom';
 
 function useAuth() {

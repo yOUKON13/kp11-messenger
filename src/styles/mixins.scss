@@ -9,7 +9,7 @@
 }
 
 @mixin gray-gradient {
-  background: linear-gradient(90deg, #a5a5a5 0%, #ffffff 100%);
+  background: var(--gray-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

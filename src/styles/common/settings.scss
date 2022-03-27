@@ -1,0 +1,89 @@
+.settings {
+  max-height: 80em;
+  height: 80vh;
+  flex-direction: column;
+
+  &__avatar {
+    margin-bottom: 1em;
+
+    img {
+      width: 10em;
+      height: 10em;
+    }
+  }
+
+  &__user-data {
+    margin-bottom: 4em;
+    p {
+      margin-right: 0.25em;
+    }
+  }
+
+  &__block {
+    position: relative;
+    justify-content: flex-start;
+    width: 50em;
+    background: var(--settings-bg);
+    padding: 1.5em 2em;
+    border-radius: 1.5em;
+
+    &:not(:last-child) {
+      margin-bottom: 2em;
+    }
+
+    &-left {
+      margin-right: 1.5em;
+    }
+
+    p {
+      font-weight: 300;
+    }
+
+    &-right {
+      margin-left: auto;
+    }
+  }
+
+  &__bottom {
+    margin-top: auto;
+    font-size: 2.3em;
+    font-weight: 300;
+    color: var(--second-text);
+  }
+
+  &__language {
+    justify-content: space-between;
+    p {
+      margin-right: 1.5em;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+.dropping-list {
+  background: var(--toolbar-bg);
+  padding: 2em;
+  border-radius: 1em;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 90%;
+  transition: 0.3s opacity, 0.3s left ease-in-out;
+
+  &.active {
+    left: 110%;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .settings {
+    &__block {
+      width: 40em !important;
+    }
+  }
+}

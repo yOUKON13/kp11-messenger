@@ -1,31 +1,20 @@
 import React, { useState } from 'react';
+import useSearch from '../../../../../hooks/useSearch/useSearch';
 
-type PropTypes = {
+type PropType = {
   search: string;
   setSearch: (search: string) => void;
 };
 
-const ChatSearch: React.FC<PropTypes> = function ({ search, setSearch }) {
+const ChatSearch: React.FC<PropType> = function ({ search, setSearch }) {
   const [ownSearch, setOwnSearch] = useState(search);
+
+  const [onKeyUp, onKeyDown] = useSearch(() => {
+    setSearch(ownSearch);
+  });
 
   function onChange(event: any) {
     setOwnSearch(event.target.value);
-  }
-
-  let typingTimer: any;
-  const doneTypingInterval = 500;
-
-  function onKeyUp() {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(doneTyping, doneTypingInterval);
-  }
-
-  function onKeyDown() {
-    clearTimeout(typingTimer);
-  }
-
-  function doneTyping() {
-    setSearch(ownSearch);
   }
 
   return (

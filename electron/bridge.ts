@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, remote } from 'electron';
 
 export const api = {
   /**
@@ -9,14 +9,19 @@ export const api = {
    * The function below can accessed using `window.Main.sendMessage`
    */
 
-  sendMessage: (message: string) => {
-    ipcRenderer.send('message', message);
+  sendMessage: (message: string, data: any) => {
+    ipcRenderer.send('message', message, data);
+  },
+
+  getMinimized() {
+    return remote.getCurrentWindow().isMinimized();
   },
 
   /**
    * Provide an easier way to listen to events
    */
   on: (channel: string, callback: Function) => {
+    ipcRenderer.removeAllListeners(channel);
     ipcRenderer.on(channel, (_, data) => callback(data));
   },
 };

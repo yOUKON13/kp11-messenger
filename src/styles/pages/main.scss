@@ -2,6 +2,7 @@
 
 .main {
   align-items: stretch;
+  justify-content: stretch;
   width: 100%;
 
   &__navigation {
@@ -13,19 +14,12 @@
     border-radius: 2em;
     margin: 1em;
 
+    .invisible-button,
     .invisible-link {
       transition: 0.3s transform ease-in-out;
 
       i {
         font-size: 3rem;
-      }
-
-      &:not(:last-child) {
-        margin-bottom: 1em;
-      }
-
-      &.invisible-button {
-        margin-top: auto;
       }
 
       &.active,
@@ -37,6 +31,16 @@
 
       &:hover {
         transform: scale(1.1) rotateZ(10deg);
+      }
+    }
+
+    .invisible-link {
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
+
+      &.invisible-button {
+        margin-top: auto;
       }
     }
   }
@@ -65,10 +69,11 @@
   }
 
   &__left {
-    border-right: 2px solid var(--tolbar-bg);
-    height: calc(100vh - 30px);
+    border-right: 2px solid var(--nav-bg);
+    height: calc(100vh - var(--toolbar-height));
     flex-direction: column;
     padding: 1em 1.25em 1em 1em;
+    width: 37em;
   }
 
   &__messages-btn {
@@ -79,7 +84,7 @@
 
   &__container {
     flex: 1;
-    height: calc(100vh - 30px);
+    height: calc(100vh - var(--toolbar-height));
     justify-content: flex-start;
     align-items: flex-start;
   }
@@ -91,14 +96,14 @@
   &__content {
     justify-content: stretch;
     align-items: stretch;
-    height: calc(100vh - 30px - 9em);
+    height: calc(100vh - var(--toolbar-height) - 9em);
     width: 100%;
   }
 
   &__scrollable-chats {
-    padding: 1em 1.25em 1em 1em;
+    padding: 1em 1.25em 1em 0;
     overflow-y: auto;
-    height: calc(100vh - 30px - 15em);
+    height: calc(100vh - var(--toolbar-height) - 15em);
 
     &::-webkit-scrollbar-track {
       background: transparent;
@@ -117,7 +122,7 @@
     }
 
     justify-content: flex-start;
-    background: var(--second-bg);
+    background: var(--input-bg2);
     padding: 0.75em 1em;
     border-radius: 0.75em;
     margin-bottom: 1em;
@@ -138,7 +143,7 @@
 
     &:hover,
     &.active {
-      background: #41454e9e;
+      background: var(--chat-hover);
     }
 
     &:hover .chat__right button {
@@ -179,18 +184,12 @@
       font-weight: 600;
       font-size: 1.75rem;
       letter-spacing: normal;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
 
     .chat__last-message {
       color: var(--input-text) !important;
       font-size: 1.6rem;
       letter-spacing: normal;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
   }
 

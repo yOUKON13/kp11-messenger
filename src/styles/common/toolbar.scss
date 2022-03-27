@@ -4,8 +4,8 @@
   justify-content: space-between;
   padding: 0 0 0 1em;
   width: 100%;
-  height: 30px;
-  background: var(--tolbar-bg);
+  height: var(--toolbar-height);
+  background: var(--toolbar-bg);
   -webkit-app-region: drag;
 
   h2 {
@@ -19,21 +19,21 @@
     align-items: stretch;
 
     button {
-      background: var(--tolbar-bg);
+      background: var(--toolbar-bg);
       border-radius: 0;
-      width: 30px;
-      height: 30px;
+      width: var(--toolbar-height);
+      height: var(--toolbar-height);
 
       i {
         font-size: 2rem;
-        -webkit-text-fill-color: #b8b8b8;
+        -webkit-text-fill-color: var(--toolbar-buttons);
       }
 
       &:hover {
         i {
           @include gradient;
         }
-        background: var(--tolbar-bg--hover);
+        background: var(--toolbar-bg--hover);
       }
     }
   }

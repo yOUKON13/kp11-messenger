@@ -1,9 +1,16 @@
 import instance, { newHeaders, Response } from '../base';
-import { LoginUser, Profile, RegisterUser, User } from '../../types/User';
+import { LoginUser, Profile, RegisterUser, UpdateProfile, User } from '../../types/User';
 
 type UserResponse = {
   status: string;
   data: User;
+};
+
+type UsersResponse = {
+  status: string;
+  data: {
+    users: Array<User>;
+  };
 };
 
 const UsersAPI = {
@@ -19,6 +26,21 @@ const UsersAPI = {
 
   createProfile(values: Profile): Promise<Response<UserResponse>> {
     return instance.post('/users/profile', values, { headers: newHeaders() });
+  },
+  updateProfile(values: UpdateProfile): Promise<Response<UserResponse>> {
+    return instance.patch('/users/profile', values, { headers: newHeaders() });
+  },
+
+  getByName(name: string, page: number): Promise<Response<UsersResponse>> {
+    return instance.get(`/users?q=${name}&p=${page}`, {
+      headers: newHeaders(),
+    });
+  },
+
+  getById(id: string): Promise<Response<UserResponse>> {
+    return instance.get(`/users/${id}`, {
+      headers: newHeaders(),
+    });
   },
 };
 

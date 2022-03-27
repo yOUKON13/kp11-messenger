@@ -4,12 +4,12 @@ import { Logout } from '../../../../store/reducers/Auth/AuthReducer';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-type PropTypes = {
+type PropType = {
   isOpened: boolean;
   setOpened: (value: boolean) => void;
 };
 
-const LogoutWindow: React.FC<PropTypes> = function ({ isOpened, setOpened }) {
+const LogoutWindow: React.FC<PropType> = function ({ isOpened, setOpened }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,7 +26,7 @@ const LogoutWindow: React.FC<PropTypes> = function ({ isOpened, setOpened }) {
     <MessageWindow toggleOpen={setOpened} isOpened={isOpened}>
       <h3 className="flex-container">
         <i
-          style={{ color: 'red', marginRight: '0.25em' }}
+          style={{ color: 'var(--red)', marginRight: '0.25em' }}
           className="fa-solid fa-triangle-exclamation"
         />
         Вы уверены что хотите выйти?

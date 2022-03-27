@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .input-container {
   width: 50em;
   margin-bottom: 2em;
@@ -20,7 +22,7 @@
   .input-outer {
     border-radius: 5em;
     border: double 1px transparent;
-    background-image: linear-gradient(#2b2e34, #2b2e34),
+    background-image: linear-gradient(var(--input-bg), var(--input-bg)),
       linear-gradient(
         90deg,
         rgba(255, 139, 40, 1) 0%,
@@ -53,7 +55,7 @@
       font-weight: 300;
       font-size: 2rem;
       background: transparent;
-      color: #fff;
+      color: var(--text-color);
       border: none;
       width: 100%;
       outline: none;
@@ -73,7 +75,7 @@
     font: inherit;
     width: 2.5em;
     height: 2.5em;
-    border: 0.3em solid #fff;
+    border: 0.3em solid var(--text-color);
     border-radius: 50%;
     transform: translateY(-0.075em);
     margin-right: 1em;
@@ -90,7 +92,7 @@
       height: 1.25em;
       transform: translate(-50%, -50%) scale(0);
       transition: 0.3s transform ease-in-out;
-      background: #fff;
+      background: var(--text-color);
       border-radius: 50%;
     }
 
@@ -110,6 +112,31 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+  }
+}
+
+.sliding-checkbox {
+  input {
+    width: 5em;
+    border: none;
+    background: #484848;
+    border-radius: 2em;
+    margin: 0;
+
+    &::before {
+      background: #fff;
+      left: 0;
+      width: 2.5em;
+      height: 2.5em;
+      transform: translateY(-50%);
+      transition: 0.3s left, 0.3s background ease-in-out;
+    }
+
+    &:checked::before {
+      transform: translateY(-50%);
+      background: var(--green);
+      left: 2.5em;
+    }
   }
 }
 
@@ -153,11 +180,12 @@ button,
   }
 }
 
-.invisible-button {
+.invisible-button,
+.invisible-button-second {
+  color: var(--text-color);
   padding: 0;
   margin: 0;
-  background: none;
-  -webkit-text-fill-color: inherit;
+  border-radius: 0;
 
   &:hover {
     &::after {
@@ -166,15 +194,9 @@ button,
   }
 }
 
-.invisible-button-second {
-  padding: 0;
-  margin: 0;
-
-  &:hover {
-    &::after {
-      background: none;
-    }
-  }
+.invisible-button {
+  background: none;
+  -webkit-text-fill-color: inherit;
 }
 
 .gray-button {
@@ -185,6 +207,19 @@ button,
   background: none;
   border: none;
   outline: none;
+}
+
+.animated-button {
+  transition: 0.3s transform ease-in-out;
+
+  &.active i:first-child,
+  &:hover :first-child {
+    @include gradient;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 input::-webkit-outer-spin-button,

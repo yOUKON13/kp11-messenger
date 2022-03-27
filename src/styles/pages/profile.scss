@@ -1,0 +1,100 @@
+.profile {
+  &__container {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+      text-align: left;
+    }
+  }
+
+  &__top-block {
+    margin-bottom: 3em;
+  }
+
+  &__bottom-block {
+    margin-bottom: 3.5em;
+
+    &-flex {
+      align-items: flex-start;
+
+      .input-container {
+        align-items: center;
+        width: auto;
+        flex: 1;
+
+        &:first-child {
+          margin-right: 2em;
+        }
+      }
+    }
+  }
+
+  &__buttons {
+    .button,
+    button {
+      padding: 0.25em 1em;
+    }
+
+    *:first-child {
+      margin-right: 1em;
+    }
+  }
+
+  &__change-password,
+  &__bottom-block > {
+    .input-container {
+      width: 100%;
+    }
+  }
+
+  &__change-password {
+    margin-bottom: 6.5em;
+    p {
+      margin-bottom: 0.5em;
+    }
+
+    &-inputs {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .profile {
+    &__bottom-block {
+      margin-bottom: 2em;
+    }
+
+    &__change-password {
+      margin-bottom: 2em;
+
+      &-inputs {
+        flex-direction: row;
+
+        .input-container:not(:last-child) {
+          margin-right: 2em;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .profile {
+    &__top-block {
+      margin-bottom: 1.5em;
+    }
+
+    &__bottom-block {
+      margin-bottom: 1em;
+    }
+
+    &__change-password {
+      margin-bottom: 1em;
+    }
+  }
+}

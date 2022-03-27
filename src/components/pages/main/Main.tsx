@@ -1,15 +1,23 @@
 import '../../../styles/pages/main.scss';
 import Chats from '../../Layout/Chats/Chats';
 import Navbar from '../../Layout/Navbar/Navbar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ChatActions } from '../../../store/reducers/Chat/ChatReducer';
 
 function Main() {
+  const dispatch = useDispatch();
+
   const [isChatCreationWindowOpened, setChatCreationWindowOpened] =
     useState(false);
 
   function onClick() {
     setChatCreationWindowOpened(true);
   }
+
+  useEffect(() => {
+    dispatch(ChatActions.setChat(null));
+  }, []);
 
   return (
     <div className="main flex-container">

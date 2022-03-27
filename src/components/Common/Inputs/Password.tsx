@@ -41,7 +41,7 @@ const Password: React.FC<PropType> = function ({
         <div className="input-with-error">
           {errorShow && <p>{error}</p>}
           <button
-            tabIndex="-1"
+            tabIndex={-1}
             type="button"
             onClick={setVisibility}
             className="invisible-button right"

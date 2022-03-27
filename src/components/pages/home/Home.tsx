@@ -1,21 +1,14 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../../../styles/pages/home.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { Auth } from '../../../store/reducers/Auth/AuthReducer';
+import { useSelector } from 'react-redux';
 import Loader from '../../Common/Loader/Loader';
-import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth/useAuth';
 import { GetLoadingStatus } from '../../../store/reducers/App/AppSelector';
 
 function Home() {
-  const dispatch = useDispatch();
   const isLoading = useSelector(GetLoadingStatus);
 
   useAuth();
-
-  useEffect(() => {
-    dispatch(Auth());
-  }, []);
 
   if (isLoading) {
     return <Loader />;
@@ -25,8 +18,8 @@ function Home() {
     <div className="home flex-container">
       <div
         className="home__bg"
-        style={{ backgroundImage: 'url(./assets/phone.png)' }}
-      ></div>
+        style={{ backgroundImage: 'url(assets/phone.png)' }}
+      />
       <div className="home__text">
         <h1>Добро пожаловать!</h1>
         <p className="home__main-text">

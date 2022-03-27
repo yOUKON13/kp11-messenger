@@ -1,6 +1,8 @@
+import { isString } from 'formik';
+
 export function minLength(count: number) {
   return function (value: string) {
-    return value.length < count
+    return value.length && value.length < count
       ? `Минимальная длина поля составляет ${count} ${
           count % 10 < 5 ? 'символа' : 'символов'
         }`
@@ -51,5 +53,11 @@ export function removeEmptyValidators(object: any) {
     if (!object[key]) {
       delete object[key];
     }
+  });
+}
+
+export function trimAll(object: any) {
+  Object.keys(object).forEach(key => {
+    object[key] = object[key].trim().replace(/⠀/gi, '');
   });
 }

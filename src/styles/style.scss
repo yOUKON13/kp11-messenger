@@ -1,14 +1,14 @@
 *::-webkit-scrollbar {
-  width: 5px; /* width of the entire scrollbar */
+  width: 5px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #121313a1;
+  background: none;
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: 20px; /* roundness of the scroll thumb */
-  background: #4d4d4d;
+  border-radius: 20px;
+  background: var(--second-bg);
 }
 
 * {
@@ -16,29 +16,83 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  transition: 0.3s color ease-in-out;
+}
+
+img {
+  user-select: none;
 }
 
 html {
-  background: var(--main-bg);
+  background: rgba(43, 46, 52, 0.99);
   height: 100vh;
   overflow: hidden;
   font-size: 8px;
 
   position: relative;
 
-  --main-bg: #2b2e34;
-  --second-bg: #41454e;
-
-  --second-text: #5f5f5f;
-  --input-text: #8f8f8f;
-
-  --tolbar-bg: #232426;
-  --tolbar-bg--hover: #191919;
-  --dark-red: #5a0900;
-  --nav-bg: rgba(0, 0, 0, 0.28);
+  --toolbar-height: 30px;
 }
 
-body {
+.app-container {
+  --red: #ff3535;
+  --green: #79ff57;
+  --dark-red: #5a0900;
+}
+
+.app-container[data-theme='dark'] {
+  background: rgba(43, 46, 52, 0.97);
+  --second-bg: #41454e;
+
+  --text-color: #fff;
+  --second-text: #5f5f5f;
+  --input-text: #8f8f8f;
+  --input-bg: #2b2e34;
+  --input-bg2: var(--second-bg);
+  --settings-bg: #373b42;
+
+  --toolbar-bg: #232426;
+  --toolbar-buttons: #b8b8b8;
+  --toolbar-bg--hover: #191919;
+  --status-window-bg: #191a1d;
+  --message-window-bg: #242629f7;
+  --chat-hover: var(--second-bg);
+
+  --scrollbar-track: #121313a1;
+  --hover-background: var(--second-bg);
+
+  --nav-bg: rgba(0, 0, 0, 0.28);
+  --gray-gradient: linear-gradient(90deg, #a5a5a5 0%, #ffffff 100%);
+}
+
+.app-container[data-theme='light'] {
+  background: rgba(255, 255, 255, 0.9);
+
+  --second-bg: #b4b4b4;
+
+  --text-color: #484848;
+  --second-text: #d7d7d7;
+  --input-text: #a5a5a5;
+  --settings-bg: var(--second-text);
+  --input-bg: #fff;
+  --input-bg2: var(--second-text);
+
+  --toolbar-bg: #f4f4f4;
+  --toolbar-buttons: #8a8a8a;
+  --toolbar-bg--hover: #d1d1d1;
+  --status-window-bg: #bbbbbb;
+  --message-window-bg: #fff;
+  --chat-hover: var(--second-text);
+
+  --scrollbar-track: #121313a1;
+  --hover-background: var(--message-window-bg);
+
+  --nav-bg: rgba(136, 136, 136, 0.28);
+  --gray-gradient: linear-gradient(90deg, #484848 0%, #484848 100%);
+}
+
+body,
+.app-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -49,9 +103,6 @@ body {
 
 .app {
   flex: 1;
-}
-
-.app {
   display: flex;
   justify-content: center;
   background-size: cover;
@@ -68,10 +119,8 @@ body {
   align-self: center;
 }
 
-@media screen and (max-width: 600px) {
-  html {
-    font-size: 7px;
-  }
+.roundy-image {
+  border-radius: 100%;
 }
 
 @import 'common/typography';

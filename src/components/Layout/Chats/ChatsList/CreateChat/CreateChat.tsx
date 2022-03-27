@@ -1,16 +1,7 @@
 import Input from '../../../../Common/Inputs/Input';
 import MessageWindow from '../../../../Common/MessageWindow/MessageWindow';
 import React from 'react';
-import { useFormik } from 'formik';
-import {
-  maxLength,
-  minLength,
-  removeEmptyValidators,
-  required,
-  validate,
-} from '../../../../../utils/validation';
-import { CreateChat as CreateChatF } from '../../../../../store/reducers/Chat/ChatReducer';
-import { useDispatch } from 'react-redux';
+import useCreateChatForm from './useCreateChatForm';
 
 type PropType = {
   isOpened?: boolean;
@@ -18,31 +9,7 @@ type PropType = {
 };
 
 const CreateChat: React.FC<PropType> = function ({ isOpened, toggleOpen }) {
-  const dispatch = useDispatch();
-
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    onSubmit: values => {
-      dispatch(CreateChatF(values.name));
-      formik.resetForm();
-      close();
-    },
-    validate: values => {
-      const error: any = {};
-
-      error.name = validate(values.name, [
-        required(),
-        minLength(3),
-        maxLength(32),
-      ]);
-
-      removeEmptyValidators(error);
-
-      return error;
-    },
-  });
+  const formik = useCreateChatForm(close);
 
   function close() {
     formik.resetForm();

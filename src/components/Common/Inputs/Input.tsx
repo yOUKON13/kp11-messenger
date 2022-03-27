@@ -9,6 +9,8 @@ type PropType = {
   name: string;
   error?: string;
   touched?: boolean;
+  onKeyUp?: Function;
+  onKeyDown?: Function;
 };
 
 const Input: React.FC<PropType> = function ({
@@ -21,6 +23,8 @@ const Input: React.FC<PropType> = function ({
   name,
   error,
   touched,
+  onKeyUp,
+  onKeyDown,
 }) {
   const [showError, setShowingError] = useState(true);
 
@@ -42,6 +46,8 @@ const Input: React.FC<PropType> = function ({
         <div className="input-with-error">
           {errorShow && <p>{error}</p>}
           <input
+            onKeyUp={onKeyUp}
+            onKeyDown={onKeyDown}
             onFocus={onFocus}
             onBlur={blur}
             name={name}

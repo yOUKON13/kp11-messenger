@@ -24,6 +24,37 @@ const ChatAPI = {
       headers: newHeaders(),
     });
   },
+
+  getById(id: string): Promise<Response<ChatResponse>> {
+    return instance.get(`/chats/${id}`, {
+      headers: newHeaders(),
+    });
+  },
+
+  update(id: string, data: any): Promise<Response<ChatResponse>> {
+    return instance.patch(`/chats/${id}`, data, {
+      headers: newHeaders(),
+    });
+  },
+
+  removeUser(chatId: string, userId: string): Promise<Response<ChatResponse>> {
+    return instance.delete(`/chats/${chatId}/users/${userId}`, {
+      headers: newHeaders(),
+    });
+  },
+
+  addUsers(
+    chatId: string,
+    users: Array<string>
+  ): Promise<Response<ChatResponse>> {
+    return instance.post(
+      `/chats/${chatId}/users`,
+      { users },
+      {
+        headers: newHeaders(),
+      }
+    );
+  },
 };
 
 export default ChatAPI;

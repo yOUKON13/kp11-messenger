@@ -134,6 +134,8 @@
     border-radius: 1.5em;
     cursor: pointer;
     transition: 0.3s background ease-in-out;
+    justify-content: space-between;
+    position: relative;
 
     .flex-container {
       justify-content: flex-start;
@@ -162,10 +164,11 @@
     .chat__info {
       text-align: left;
       flex: 1;
-      width: 7em;
+      width: 6em;
     }
 
     .chat__right {
+      margin-left: auto;
       flex-direction: column;
       align-items: flex-end;
 
@@ -173,11 +176,23 @@
         visibility: hidden;
         opacity: 0;
         transition: 0.3s opacity ease-in-out;
+        z-index: 10;
+
         i {
           color: var(--second-text) !important;
           font-size: 2.5rem;
         }
       }
+    }
+
+    .chat__unread {
+      position: absolute;
+      width: 0.75em;
+      height: 0.75em;
+      background: linear-gradient(90deg, rgba(255, 139, 40, 1) 0%, rgba(247, 45, 23, 1) 100%);
+      border-radius: 100%;
+      top: 65%;
+      left: 16%;
     }
 
     .chat__name {

@@ -11,9 +11,13 @@ import SetProfile from './components/pages/set-profile/SetProfile';
 import Messages from './components/pages/messages/Messages';
 import Profile from './components/pages/profile/Profile';
 import StatusMessage from './components/Layout/StatusMessage/StatusMessage';
-import { GetTheme } from './store/reducers/Settings/SettingsSelector';
+import { GetBackground, GetTheme } from './store/reducers/Settings/SettingsSelector';
 import useWebSocket from './hooks/useWebSocket/useWebSocket';
 import UserWindow from './components/Layout/UserWindow/UserWindow';
+import { db, useDBInit } from './utils/DB/indexedDB';
+import Loader from './components/Common/Loader/Loader';
+import MessageSearch from './components/pages/messages-search/MessageSearch';
+import { useRef } from 'react';
 
 function AppRouter() {
   useWebSocket();
@@ -38,6 +42,9 @@ function AppRouter() {
       <Route path="/profile">
         <Profile />
       </Route>
+      <Route path="/message-search">
+        <MessageSearch />
+      </Route>
       <Route path="/">
         <Index />
       </Route>
@@ -47,17 +54,29 @@ function AppRouter() {
 
 function AppInner() {
   const theme = useSelector(GetTheme);
+  const isInitted = useDBInit();
+  const background = useSelector(GetBackground);
 
   return (
-    <div className="app-container" data-theme={theme ? 'dark' : 'light'}>
-      <Toolbar />
-      <div className="app">
-        <HashRouter>
-          <AppRouter />
-        </HashRouter>
+    <div
+      style={{ backgroundImage: `url(${background?.replace(/\\/g, '/')}), url('assets/bg.jpg')` }}
+      className="app-container"
+      data-theme={theme ? 'dark' : 'light'}
+    >
+      <div className="app-container__bg">
+        <Toolbar />
+        <div className="app">
+          {isInitted ? (
+            <HashRouter>
+              <AppRouter />
+            </HashRouter>
+          ) : (
+            <Loader />
+          )}
+          <StatusMessage />
+          <UserWindow />
+        </div>
       </div>
-      <StatusMessage />
-      <UserWindow />
     </div>
   );
 }

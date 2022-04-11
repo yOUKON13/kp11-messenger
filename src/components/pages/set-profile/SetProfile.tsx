@@ -46,7 +46,7 @@ function SetProfile() {
         </div>
 
         <div className="set-profile__buttons flex-container">
-          <button onClick={goBack} className="gray-button">
+          <button tabIndex={-1} onClick={goBack} className="gray-button">
             Назад
           </button>
           <button type="submit">Далее</button>

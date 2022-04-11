@@ -10,6 +10,7 @@ type UsersResponse = {
   status: string;
   data: {
     users: Array<User>;
+    isLastPage: boolean;
   };
 };
 

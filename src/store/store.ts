@@ -7,6 +7,7 @@ import SettingsReducer from './reducers/Settings/SettingsReducer';
 import { io } from 'socket.io-client';
 import { wsServer } from '../API/base';
 import UserReducer from './reducers/User/UserReducer';
+import MessageReducer from './reducers/Message/MessageReducer';
 
 export const socket = io(`${wsServer}`, {
   transports: ['websocket'],
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   chat: ChatCombinedReducer,
   settings: SettingsReducer,
   user: UserReducer,
+  message: MessageReducer,
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;

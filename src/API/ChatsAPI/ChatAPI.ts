@@ -10,13 +10,14 @@ type ChatsResponse = {
   status: string;
   data: {
     chats: Array<Chat>;
+    isLastPage: boolean;
     count: number;
   };
 };
 
 const ChatAPI = {
-  create(name: string): Promise<Response<ChatResponse>> {
-    return instance.post('/chats', { name }, { headers: newHeaders() });
+  create(name: string, users?: Array<string>): Promise<Response<ChatResponse>> {
+    return instance.post('/chats', { name, users }, { headers: newHeaders() });
   },
 
   get(search: string, page: number): Promise<Response<ChatsResponse>> {
@@ -43,10 +44,13 @@ const ChatAPI = {
     });
   },
 
-  addUsers(
-    chatId: string,
-    users: Array<string>
-  ): Promise<Response<ChatResponse>> {
+  leave(chatId: string): Promise<Response<ChatResponse>> {
+    return instance.delete(`/chats/${chatId}/users`, {
+      headers: newHeaders(),
+    });
+  },
+
+  addUsers(chatId: string, users: Array<string>): Promise<Response<ChatResponse>> {
     return instance.post(
       `/chats/${chatId}/users`,
       { users },

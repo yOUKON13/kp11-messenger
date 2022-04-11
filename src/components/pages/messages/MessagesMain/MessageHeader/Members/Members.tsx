@@ -10,7 +10,7 @@ type PropType = {
 
 const Members: React.FC<PropType> = function ({ creatorId, members, isActive }) {
   return (
-    <div className={`${isActive ? 'active ' : ''}members`}>
+    <div className={`${isActive ? 'active ' : ''}members dropping-down`}>
       {members.map(member => (
         <Member
           surname={member.surname}

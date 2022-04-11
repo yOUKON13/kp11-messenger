@@ -1,4 +1,5 @@
 @import '../animations';
+@import '../mixins';
 
 .messages {
   &__main,
@@ -32,12 +33,6 @@
           margin-bottom: 1em;
         }
 
-        .roundy-image {
-          width: 6em;
-          height: 6em;
-          margin-right: 1.5em;
-        }
-
         &.same {
           .message__content {
             margin-left: 7.5em;
@@ -46,13 +41,13 @@
 
         &.self {
           .message__content {
-            background: var(--toolbar-bg--hover);
+            background: var(--own-message-bg);
           }
         }
 
         &__content {
           justify-content: flex-start;
-          background: var(--second-bg);
+          background: var(--message-bg);
           padding: 1.5em;
           border-radius: 1em;
 
@@ -61,6 +56,7 @@
             font-size: 2rem;
             margin-right: 1em;
             word-break: break-word;
+            color: var(--message-color);
           }
 
           .gradient-text {
@@ -119,11 +115,25 @@
     }
 
     .messages__typing {
-      font-size: 1.8rem;
       left: 5em;
       top: 2.25em;
       position: absolute;
-      max-width: calc(100vw - 50em);
+
+      &,
+      p,
+      .text-overflow {
+        font-size: 1.8rem;
+        text-align: left;
+      }
+
+      .text-overflow {
+        margin-right: 0.25em;
+      }
+
+      .text-overflow {
+        max-width: calc(100vw - 55em);
+        text-overflow: clip;
+      }
 
       i {
         font-size: 1.5rem;
@@ -150,8 +160,14 @@
     }
   }
 
+  &__options {
+    position: relative;
+  }
+
   &__members {
     position: relative;
+    margin-right: 3em;
+
     i:nth-child(2) {
       font-size: 2rem;
     }
@@ -166,25 +182,7 @@
     }
 
     .members {
-      padding: 2em;
-      background: var(--nav-bg);
-      position: absolute;
-      right: -30%;
-      top: 250%;
-      border-radius: 2.5em;
-      opacity: 0;
-      transition: 0.3s opacity, 0.3s transform ease-in-out;
-      transform: translateY(-200%);
-      pointer-events: none;
-      max-height: 60vh;
-      overflow-y: auto;
-
-      &.active {
-        pointer-events: auto;
-        opacity: 1;
-
-        transform: translateY(0%);
-      }
+      right: -40%;
     }
   }
 }
@@ -204,11 +202,8 @@
     text-align: left;
   }
 
-  &__remove {
-    margin-left: auto;
-    i {
-      color: var(--status-window-bg);
-    }
+  i {
+    color: var(--status-window-bg);
   }
 
   &:not(:last-child) {
@@ -280,6 +275,35 @@
     width: 5em;
     height: 5em;
     margin-right: 0.75em;
+  }
+}
+
+.chat__options {
+  .block {
+    &:not(:last-child) {
+      margin-bottom: 1.25em;
+    }
+
+    button {
+      &:hover {
+        i {
+          @include gradient;
+          transform: scale(1.1);
+        }
+      }
+
+      p {
+        font-size: 1.75rem;
+        font-weight: 500;
+        overflow: visible;
+
+        i {
+          font-size: 2.5rem;
+          margin-right: 0.5em;
+          transition: 0.3s transform ease-in-out;
+        }
+      }
+    }
   }
 }
 

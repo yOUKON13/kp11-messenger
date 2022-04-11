@@ -11,7 +11,7 @@ const SET_USER_WINDOW_ACTIVE = 'Roxine/User/SET_USER_WINDOW_ACTIVE';
 
 const initState = {
   showingUser: null as null | User,
-  isUserWindowActive: true,
+  isUserWindowActive: false,
 };
 type UserStateType = typeof initState;
 

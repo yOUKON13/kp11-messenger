@@ -27,33 +27,21 @@ function Navbar() {
         <Navlink to="/main">
           <i className="fa-regular fa-house" />
         </Navlink>
-        <Navlink
-          checkUrl="/messages"
-          to={`/messages/${chats.length ? chats[0]?._id : ''}`}
-        >
+        <Navlink checkUrl="/messages" to={`/messages/${chats.length ? chats[0]?._id : ''}`}>
           <i className="fa-regular fa-comment" />
         </Navlink>
-        <Navlink to="/search">
+        <Navlink to="/message-search">
           <i className="fa-regular fa-magnifying-glass" />
         </Navlink>
-        <button
-          onClick={openLogoutWindow}
-          className="invisible-button invisible-link"
-        >
+        <button onClick={openLogoutWindow} className="invisible-button invisible-link">
           <i className="fa-regular fa-arrow-right-from-bracket" />
         </button>
         <button onClick={openSettingsWindow} className="invisible-button">
           <i className="fa-regular fa-gear" />
         </button>
       </nav>
-      <LogoutWindow
-        isOpened={isLogoutWindowOpened}
-        setOpened={setLogoutWindowOpened}
-      />
-      <SettingsWindow
-        toggleOpen={setSettingsWindowOpened}
-        isOpened={isSettingsWindowOpened}
-      />
+      <LogoutWindow isOpened={isLogoutWindowOpened} setOpened={setLogoutWindowOpened} />
+      <SettingsWindow toggleOpen={setSettingsWindowOpened} isOpened={isSettingsWindowOpened} />
     </>
   );
 }

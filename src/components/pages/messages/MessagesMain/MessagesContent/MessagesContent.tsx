@@ -37,12 +37,6 @@ function MessagesContent() {
     }
   }, [messages]);
 
-  /*useEffect(() => {
-    window.removeEventListener('scroll', getDataScroll as any);
-    setPage(0);
-    dispatch(GetMessagesF(currentChat?._id || '', 0));
-  }, [sendingMessages]);*/
-
   useEffect(() => {
     if (currentChat) {
       dispatch(GetMessagesF(currentChat._id, 0));
@@ -57,13 +51,8 @@ function MessagesContent() {
           sender={message.sender}
           sendAt={message.sendAt}
           content={message.content}
-          isSameSender={
-            index < messages.length - 1 &&
-            messages[index + 1].sender._id === message.sender._id
-          }
-          isSending={
-            !!sendingMessages.find(msg => message.content === msg.content)
-          }
+          isSameSender={index < messages.length - 1 && messages[index + 1].sender._id === message.sender._id}
+          isSending={!!sendingMessages.find(msg => message.content === msg.content)}
         />
       ))}
     </div>

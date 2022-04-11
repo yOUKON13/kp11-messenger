@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetChatsLoading, GetCurrentChat } from '../../../store/reducers/Chat/ChatSelector';
-import { GetChat } from '../../../store/reducers/Chat/ChatReducer';
+import { ChatActions, GetChat } from '../../../store/reducers/Chat/ChatReducer';
 import Loader from '../../Common/Loader/Loader';
 import MessagesMain from './MessagesMain/MessagesMain';
 import '../../../styles/pages/messages.scss';
+import { GetChatDB, SetChatDB } from '../../../utils/DB/chatsDB';
 
 function Message() {
   const [isChatCreationWindowOpened, setChatCreationWindowOpened] = useState(false);
@@ -19,6 +20,16 @@ function Message() {
   useEffect(() => {
     dispatch(GetChat(id));
   }, [id]);
+
+  useEffect(() => {
+    if (currentChat) {
+      GetChatDB(currentChat?._id, result => {
+        SetChatDB(id, { ...result, lastReadMessage: currentChat.lastMessage }, () => {
+          dispatch(ChatActions.setChat({ ...currentChat }));
+        });
+      });
+    }
+  }, [currentChat?.lastMessage]);
 
   return (
     <div className="main messages flex-container">

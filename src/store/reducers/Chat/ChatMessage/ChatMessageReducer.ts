@@ -1,6 +1,6 @@
 import catchAsync from '../../../../../server/utils/catchAsync';
 import ActionsType from '../../Types';
-import { Reducer } from 'redux';
+import { Dispatch, Reducer } from 'redux';
 import { Message } from '../../../../types/Message';
 import MessagesAPI from '../../../../API/MessagesAPI/MessagesAPI';
 import { socket } from '../../../store';
@@ -113,6 +113,13 @@ export function SendMessage(content: string, chatId: string) {
   );
 }
 
+export function AddMessageF(message: Message) {
+  return async function (dispatch: Dispatch<any>, getState: any) {
+    dispatch(ChatMessageActions.addMessage(message));
+    dispatch(ChatActions.setChat({ ...getState().chat.main.currentChat, lastMessage: message._id }));
+  };
+}
+
 export function GetMessagesF(chatId: string, page: number) {
   return catchAsync(
     async (dispatch, getState) => {
@@ -129,7 +136,7 @@ export function GetMessagesF(chatId: string, page: number) {
 
         dispatch(ChatMessageActions.setMessages(filterByProp(resultMessages, '_id')));
 
-        dispatch(ChatMessageActions.setLastPage(!result.data.data.messages.length));
+        dispatch(ChatMessageActions.setLastPage(result.data.data.isLastPage));
       }
     },
     (dispatch: any) => {

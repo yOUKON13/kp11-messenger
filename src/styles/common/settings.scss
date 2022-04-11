@@ -15,17 +15,15 @@
   &__user-data {
     margin-bottom: 4em;
     p {
+      max-width: 80vw;
       margin-right: 0.25em;
     }
   }
 
   &__block {
-    position: relative;
     justify-content: flex-start;
     width: 50em;
-    background: var(--settings-bg);
     padding: 1.5em 2em;
-    border-radius: 1.5em;
 
     &:not(:last-child) {
       margin-bottom: 2em;
@@ -41,6 +39,16 @@
 
     &-right {
       margin-left: auto;
+    }
+  }
+
+  &__background-upload {
+    label {
+      cursor: pointer;
+    }
+
+    input {
+      display: none;
     }
   }
 

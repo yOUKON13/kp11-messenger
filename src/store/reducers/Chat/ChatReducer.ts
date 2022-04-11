@@ -6,6 +6,7 @@ import catchAsync from '../../../../server/utils/catchAsync';
 import { AppActions } from '../App/AppReducer';
 import { UserTyping } from '../../../types/User';
 import { Message } from '../../../types/Message';
+import { AddChatsDB, SetChatDB } from '../../../utils/DB/chatsDB';
 
 const SET_CHATS = 'Messenger/Chat/SET-CHATS';
 const SET_CURRENT_CHAT = 'Messenger/Chat/SET-CURRENT-CHAT';
@@ -85,14 +86,14 @@ export const ChatActions = {
   },
 };
 
-export function CreateChat(name: string) {
-  return catchAsync(async (dispatch, getState) => {
+export function CreateChat(name: string, users?: Array<string>) {
+  return catchAsync(async dispatch => {
     dispatch(AppActions.setLoading(true));
 
-    const result = await ChatAPI.create(name);
+    const result = await ChatAPI.create(name, users);
 
     if (result.data.status) {
-      dispatch(GetChatsF('', 0));
+      SetChatDB(result.data.data._id);
     }
   });
 }
@@ -109,9 +110,10 @@ export function GetChatsF(search: string, page: number) {
       const result = await ChatAPI.get(search, page);
 
       if (result.data.status) {
+        AddChatsDB(result.data.data.chats);
         dispatch(ChatActions.setChats([...getState().chat.main.chats, ...result.data.data.chats]));
 
-        dispatch(ChatActions.setLastPage(!result.data.data.chats.length));
+        dispatch(ChatActions.setLastPage(result.data.data.isLastPage));
         dispatch(ChatActions.setChatsCount(result.data.data.count));
       }
     },

@@ -40,6 +40,7 @@ const Member: React.FC<PropType> = function ({ creatorId, name, id, surname, ava
         </button>
         {creatorId === id && <p className="user__creator">Создатель</p>}
       </div>
+      {creatorId === id && <i className="fa-solid fa-star" />}
       {currentUser?._id !== id && currentUser?._id === creatorId && (
         <button onClick={onClick} className="invisible-button user__remove">
           <i className="fa-solid fa-circle-xmark" />

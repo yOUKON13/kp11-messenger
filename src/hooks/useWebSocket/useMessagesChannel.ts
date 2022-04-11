@@ -8,6 +8,7 @@ import OnMessageFactory from './OnMessage/OnMessageFactory';
 import { UpdateChatInList } from '../../store/reducers/Chat/ChatReducer';
 import { socket } from '../../store/store';
 import { useHistory } from 'react-router-dom';
+import { GetChatDB } from '../../utils/DB/chatsDB';
 
 function useMessageCallback() {
   const [isWindowActive, setWindowActive] = useState(true);
@@ -29,9 +30,11 @@ function useMessageCallback() {
 
       OnMessageFactory.Create(chatActive)(dispatch, currentChat!, payload, user!, history);
 
-      if (sounds && (!isWindowActive || !chatActive)) {
-        notification.play();
-      }
+      GetChatDB(payload.chat, result => {
+        if (sounds && (!isWindowActive || !chatActive) && !result.isMuted) {
+          notification.play();
+        }
+      });
 
       dispatch(UpdateChatInList(payload.chat, payload));
     },

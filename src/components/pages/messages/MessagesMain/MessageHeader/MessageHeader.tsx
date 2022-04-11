@@ -2,60 +2,43 @@ import Members from './Members/Members';
 import { useSelector } from 'react-redux';
 import { GetCurrentChat, GetUserTyping } from '../../../../../store/reducers/Chat/ChatSelector';
 import { useState } from 'react';
-import ChangeNameWindow from './ChangeChatWindow/ChangeChatWindow';
-import { GetUser } from '../../../../../store/reducers/Auth/AuthSelector';
-import AddUserWindow from './AddUserWindow/AddUserWindow';
 import { server } from '../../../../../API/base';
+import Options from './Options/Options';
 
 const MessageHeader = function () {
   const currentChat = useSelector(GetCurrentChat);
-  const currentUser = useSelector(GetUser);
   const userTyping = useSelector(GetUserTyping);
-  const [isMembersShowing, setMembersShowing] = useState(false);
-  const [isChangeWindowActive, setChangeWindowActive] = useState(false);
-  const [isAddUserWindowActive, setAddUserWindowActive] = useState(false);
   const isTyping = userTyping && userTyping.isTyping;
+  const typing = isTyping && userTyping && userTyping.user;
+  const [isMembersShowing, setMembersShowing] = useState(false);
+  const [isOptionsWindowActive, setOptionsWindowActive] = useState(false);
 
   function showMembers() {
     setMembersShowing(!isMembersShowing);
+    setOptionsWindowActive(false);
   }
 
-  function showChangeWindow() {
-    setChangeWindowActive(true);
-  }
-
-  function showAddUserWindow() {
-    setAddUserWindowActive(true);
+  function showOptionsWindow() {
+    setOptionsWindowActive(!isOptionsWindowActive);
+    setMembersShowing(false);
   }
 
   return (
-    <div className={`${isTyping ? 'typing ' : ''}messages__header flex-container`}>
+    <div className={`${typing ? 'typing ' : ''}messages__header flex-container`}>
       <img
         src={currentChat?.avatar ? `${server}${currentChat.avatar}` : 'assets/avatar.png'}
         className="messages__avatar roundy-image"
         alt=""
       />
       <p className="text-overflow">{currentChat?.name}</p>
-      {isTyping && (
-        <p className="messages__typing fle  x-container">
+      {typing && (
+        <div className="messages__typing flex-container">
           <i className="fa-solid fa-circle" />
-          {userTyping?.user?.name + ' ' + userTyping?.user?.surname} печатает
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </p>
+          <p className="text-overflow">{userTyping!.user.name + ' ' + userTyping!.user.surname}</p>
+          <p>печатает...</p>
+        </div>
       )}
-
       <p className="messages__members-count">{currentChat?.users.length} чел.</p>
-      {currentUser?._id === currentChat?.creator && (
-        <button onClick={showChangeWindow} className="messages__edit-chat-name animated-button invisible-button">
-          <i className="fa-solid fa-pen-to-square" />
-        </button>
-      )}
-
-      <button onClick={showAddUserWindow} className="messages__add-member animated-button invisible-button">
-        <i className="fa-solid fa-plus" />
-      </button>
       <div className="messages__members">
         <button
           onClick={showMembers}
@@ -70,18 +53,13 @@ const MessageHeader = function () {
           isActive={isMembersShowing}
         />
       </div>
-      <ChangeNameWindow
-        chatId={currentChat?._id || ''}
-        isOpened={isChangeWindowActive}
-        toggleOpen={setChangeWindowActive}
-        name={currentChat?.name || ''}
-        avatar={currentChat?.avatar || ''}
-      />
-      <AddUserWindow
-        chatId={currentChat?._id || ''}
-        toggleOpen={setAddUserWindowActive}
-        isOpened={isAddUserWindowActive}
-      />
+
+      <div className="messages__options">
+        <button onClick={showOptionsWindow} className="animated-button invisible-button">
+          <i className={`${isOptionsWindowActive ? 'gradient-text ' : ''}fa-solid fa-ellipsis`} />
+        </button>
+        <Options isActive={isOptionsWindowActive} />
+      </div>
     </div>
   );
 };

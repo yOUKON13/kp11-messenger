@@ -1,0 +1,60 @@
+.message-search {
+  .main__container {
+    padding: 3em 5em;
+    flex-direction: column;
+
+    .chats__chat-search {
+      margin-bottom: 3em;
+
+      &,
+      input {
+        width: 100%;
+      }
+    }
+  }
+
+  &__messages {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .found-message {
+    width: 100%;
+    padding: 0.75em 1.5em;
+    border-radius: 2em;
+    justify-content: flex-start;
+
+    &:not(:last-child) {
+      margin-bottom: 1.5em;
+    }
+
+    &__avatar {
+      font-size: 3.5rem;
+    }
+
+    &:hover {
+      background: var(--second-bg);
+    }
+
+    &__info {
+      width: calc(100vw - 75em);
+      margin-right: 1em;
+    }
+
+    time {
+      margin-left: auto;
+    }
+
+    &__sender {
+      width: 100%;
+      font-weight: 600;
+      font-size: 1.75rem;
+    }
+
+    &__content {
+      width: 100%;
+      font-size: 1.5rem;
+      color: var(--input-text);
+    }
+  }
+}

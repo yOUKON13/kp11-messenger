@@ -1,10 +1,9 @@
-import { ChatActions, GetChat } from '../../../store/reducers/Chat/ChatReducer';
-import { ChatMessageActions } from '../../../store/reducers/Chat/ChatMessage/ChatMessageReducer';
+import { ChatActions, GetChat, GetChatsF } from '../../../store/reducers/Chat/ChatReducer';
+import { AddMessageF, ChatMessageActions } from '../../../store/reducers/Chat/ChatMessage/ChatMessageReducer';
 import { Message } from '../../../types/Message';
 import { Chat } from '../../../types/Chat';
 import { Dispatch } from 'redux';
 import { User } from '../../../types/User';
-import OnMessageChatNotActive from './OnMessageChatNotActive';
 
 export default function OnMessageChatActive(
   dispatch: Dispatch<any>,
@@ -14,12 +13,24 @@ export default function OnMessageChatActive(
   history: any
 ) {
   if (payload.isSystem) {
-    if (payload.action === 'userRemove' && payload.target === user._id) {
-      history.push('/main');
-    } else {
-      dispatch(GetChat(currentChat?._id || ''));
+    switch (payload.action) {
+      case 'userRemove':
+      case 'userLeave':
+        if (payload.target === user._id) {
+          history.push('/main');
+          return;
+        }
+        break;
+      case 'chatRemove':
+        history.push('/main');
+        return;
+      case 'changeChat':
+        dispatch(GetChatsF('', 0));
+        break;
     }
+
+    dispatch(GetChat(currentChat?._id || ''));
   } else {
-    dispatch(ChatMessageActions.addMessage(payload));
+    dispatch(AddMessageF(payload));
   }
 }

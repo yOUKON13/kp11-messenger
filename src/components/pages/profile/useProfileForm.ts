@@ -1,13 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import {
-  length,
-  maxLength,
-  minLength,
-  removeEmptyValidators,
-  trimAll,
-  validate,
-} from '../../../utils/validation';
+import { length, maxLength, minLength, removeEmptyValidators, trimAll, validate } from '../../../utils/validation';
 import { UpdateProfileF } from '../../../store/reducers/Auth/AuthReducer';
 import { GetUser } from '../../../store/reducers/Auth/AuthSelector';
 import { makeFormData } from '../../../utils/formData';
@@ -30,9 +23,9 @@ function useProfileForm(file: File) {
       trimAll(values);
       const error: any = {};
 
-      error.surname = validate(values.surname, [maxLength(128)]);
+      error.surname = validate(values.surname, [maxLength(64)]);
       error.phoneNumber = validate(values.phoneNumber.toString(), [length(11)]);
-      error.name = validate(values.name, [maxLength(64)]);
+      error.name = validate(values.name, [maxLength(32)]);
       error.group = validate(values.group, [maxLength(32)]);
       error.currentPassword = validate(values.currentPassword, [minLength(6)]);
       error.newPassword = validate(values.newPassword, [minLength(6)]);
@@ -44,10 +37,7 @@ function useProfileForm(file: File) {
       const isFilled =
         file ||
         !Object.keys(values).every(key => {
-          return (
-            values[key] === formik.initialValues[key] ||
-            values[key] === user[key]
-          );
+          return values[key] === formik.initialValues[key] || values[key] === user[key];
         });
 
       if (isFilled) {

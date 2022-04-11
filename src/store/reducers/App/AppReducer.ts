@@ -2,7 +2,7 @@ import { Dispatch, Reducer } from 'redux';
 import ActionsType from '../Types';
 
 const SET_LOADING = 'Messenger/App/SET-LOADING';
-const SET_MESSAGE = 'Roxine/App/SET-MESSAGE';
+const SET_MESSAGE = 'Messenger/App/SET-MESSAGE';
 
 type MessageType = {
   text: string | null;

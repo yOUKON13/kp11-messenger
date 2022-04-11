@@ -1,0 +1,42 @@
+.showing-user {
+  &__info {
+    margin-bottom: 2.5em;
+
+    .text-overflow {
+      max-width: 75vw;
+    }
+  }
+
+  p {
+    font-weight: 300;
+  }
+
+  &__avatar {
+    margin-right: 1.75em;
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+  }
+
+  &__block {
+    justify-content: flex-start;
+    margin-bottom: 10em;
+
+    i {
+      margin-right: 0.5em;
+    }
+  }
+
+  button {
+    width: 100%;
+    font-weight: 300;
+    font-size: 2.5rem;
+    justify-content: center;
+    padding: 0.5em 1em;
+
+    &,
+    &::after {
+      border-radius: 0.75em;
+    }
+  }
+}

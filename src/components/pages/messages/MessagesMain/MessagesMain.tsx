@@ -14,11 +14,7 @@ function MessagesMain() {
       </div>
       <div className="messages__actions">
         <form onSubmit={formik.handleSubmit} className="flex-container">
-          <button
-            className="invisible-button animated-button"
-            type="button"
-            tabIndex={-1}
-          >
+          <button className="invisible-button animated-button" type="button" tabIndex={-1}>
             <i className="fa-solid fa-paperclip" />
           </button>
           <MessageField formik={formik} />

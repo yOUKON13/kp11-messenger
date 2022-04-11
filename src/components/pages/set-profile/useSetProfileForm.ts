@@ -1,13 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import {
-  length,
-  maxLength,
-  removeEmptyValidators,
-  required,
-  trimAll,
-  validate,
-} from '../../../utils/validation';
+import { length, maxLength, removeEmptyValidators, required, trimAll, validate } from '../../../utils/validation';
 import { CreateProfile } from '../../../store/reducers/Auth/AuthReducer';
 import { makeFormData } from '../../../utils/formData';
 
@@ -25,9 +18,9 @@ function useSetProfileForm(file: File) {
       trimAll(values);
       const error: any = {};
 
-      error.surname = validate(values.surname, [maxLength(128)]);
+      error.surname = validate(values.surname, [maxLength(64)]);
       error.phoneNumber = validate(values.phoneNumber.toString(), [length(11)]);
-      error.name = validate(values.name, [required(), maxLength(64)]);
+      error.name = validate(values.name, [required(), maxLength(32)]);
       error.group = validate(values.group, [required(), maxLength(32)]);
       removeEmptyValidators(error);
       return error;

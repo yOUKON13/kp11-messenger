@@ -3,17 +3,16 @@ import Loader from '../../../Common/Loader/Loader';
 import Chat from './Chat/Chat';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  GetChatsGlobalPage,
-  GetChats,
-  GetChatsLoading,
-  GetIsLastPage,
-} from '../../../../store/reducers/Chat/ChatSelector';
+import { GetChats, GetChatsLoading, GetIsLastPage } from '../../../../store/reducers/Chat/ChatSelector';
 import { GetChatsF } from '../../../../store/reducers/Chat/ChatReducer';
 import useInfiniteScroll from '../../../../hooks/useInfiniteScroll/useInfiniteScroll';
+import LeaveFromChat from './LeaveFromChat/LeaveFromChat';
 
 function ChatsList() {
   const [search, setSearch] = useState('');
+  const [isChatLeaveWindowOpened, setChatLeaveWindowOpened] = useState(false);
+  const [leavingChatId, setLeavingChatId] = useState('');
+
   const scrollable = useRef<HTMLDivElement>();
   const isLoading = useSelector(GetChatsLoading);
   const isLastPage = useSelector(GetIsLastPage);
@@ -50,8 +49,9 @@ function ChatsList() {
             <Chat
               id={chat._id}
               key={chat._id}
-              lastMessage={chat.lastMessage?.content}
-              lastMessageTime={chat.lastMessage?.sendAt}
+              setLeaveWindowOpened={setChatLeaveWindowOpened}
+              setLeavingChatId={setLeavingChatId}
+              lastMessage={chat.lastMessage}
               name={chat.name}
               avatar={chat.avatar}
             />
@@ -59,6 +59,11 @@ function ChatsList() {
         })}
         {isLoading && <Loader />}
       </div>
+      <LeaveFromChat
+        leavingChatId={leavingChatId}
+        toggleOpen={setChatLeaveWindowOpened}
+        isOpened={isChatLeaveWindowOpened}
+      />
     </div>
   );
 }

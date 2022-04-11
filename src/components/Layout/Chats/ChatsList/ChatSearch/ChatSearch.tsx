@@ -4,9 +4,10 @@ import useSearch from '../../../../../hooks/useSearch/useSearch';
 type PropType = {
   search: string;
   setSearch: (search: string) => void;
+  placeholder?: string;
 };
 
-const ChatSearch: React.FC<PropType> = function ({ search, setSearch }) {
+const ChatSearch: React.FC<PropType> = function ({ search, setSearch, placeholder }) {
   const [ownSearch, setOwnSearch] = useState(search);
 
   const [onKeyUp, onKeyDown] = useSearch(() => {
@@ -27,7 +28,7 @@ const ChatSearch: React.FC<PropType> = function ({ search, setSearch }) {
         onChange={onChange}
         className="invisible-input"
         type="text"
-        placeholder="Поиск"
+        placeholder={placeholder || `Поиск`}
       />
     </div>
   );

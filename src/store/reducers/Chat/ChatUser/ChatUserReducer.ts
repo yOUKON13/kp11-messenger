@@ -63,6 +63,12 @@ export function RemoveUserFromChat(chatId: string, userId: string) {
   });
 }
 
+export function LeaveFromChatF(chatId: string) {
+  return catchAsync(async (dispatch, getState) => {
+    await ChatAPI.leave(chatId);
+  });
+}
+
 export function AddUsersToChat(chatId: string, users: Array<string>) {
   return catchAsync(async (dispatch, getState) => {
     const result = await ChatAPI.addUsers(chatId, users);
@@ -85,7 +91,7 @@ export function GetUsersForChat(name: string, page: number) {
 
       if (result.data.status) {
         dispatch(ChatUserActions.setUsers([...getState().chat.user.users, ...result.data.data.users]));
-        dispatch(ChatUserActions.setLastPage(!result.data.data.users.length));
+        dispatch(ChatUserActions.setLastPage(result.data.data.isLastPage));
       }
     },
     (dispatch: any) => {

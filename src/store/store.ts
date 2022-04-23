@@ -5,12 +5,18 @@ import AuthReducer from './reducers/Auth/AuthReducer';
 import ChatCombinedReducer from './reducers/Chat/ChatCombinedReducer';
 import SettingsReducer from './reducers/Settings/SettingsReducer';
 import { io } from 'socket.io-client';
-import { wsServer } from '../API/base';
+import { server, wsServer } from '../API/base';
 import UserReducer from './reducers/User/UserReducer';
 import MessageReducer from './reducers/Message/MessageReducer';
 
 export const socket = io(`${wsServer}`, {
   transports: ['websocket'],
+  extraHeaders: {
+    Authorization: 'secret',
+    Origin: server,
+    'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+  },
 });
 
 const rootReducer = combineReducers({

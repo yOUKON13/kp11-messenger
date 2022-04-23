@@ -25,6 +25,7 @@ function useSetProfileForm(file: File) {
       removeEmptyValidators(error);
       return error;
     },
+
     onSubmit: values => {
       const formData = makeFormData(values);
 
@@ -36,6 +37,8 @@ function useSetProfileForm(file: File) {
       formik.resetForm();
     },
   });
+
+  console.log(formik.values);
 
   return formik;
 }

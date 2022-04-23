@@ -179,11 +179,11 @@ export function UpdateChatInList(chatId: string, message: Message | null = null)
   return async function (dispatch: Dispatch, getState: any) {
     const chat = getState().chat.main.chats.find(c => c._id === chatId);
 
-    if (message) {
+    if (chat && message) {
       chat.lastMessage = message;
-    }
 
-    dispatch(ChatActions.setChats([chat, ...getState().chat.main.chats.filter(c => c._id !== chatId)]));
+      dispatch(ChatActions.setChats([chat, ...getState().chat.main.chats.filter(c => c._id !== chatId)]));
+    }
   };
 }
 

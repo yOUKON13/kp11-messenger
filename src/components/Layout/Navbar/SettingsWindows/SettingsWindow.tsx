@@ -103,12 +103,12 @@ const SettingsWindow: React.FC<PropType> = function ({ isOpened, toggleOpen }) {
           <i className="fa-regular fa-image settings__block-left" />
           <p>Задний фон</p>
           <div className="settings__background-upload settings__block-right">
-            <label htmlFor="file-upload" className="invisible-button animated-button flex-container">
+            <label htmlFor="bg-upload" className="invisible-button animated-button flex-container">
               <i className="fa-regular fa-paperclip" />
             </label>
             <input
               onChange={onFileSet}
-              id="file-upload"
+              id="bg-upload"
               type="file"
               name="background"
               accept="image/png, image/jpeg, image/gif"

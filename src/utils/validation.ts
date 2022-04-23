@@ -3,9 +3,7 @@ import { isString } from 'formik';
 export function minLength(count: number) {
   return function (value: string) {
     return value.length && value.length < count
-      ? `Минимальная длина поля составляет ${count} ${
-          count % 10 < 5 ? 'символа' : 'символов'
-        }`
+      ? `Минимальная длина поля составляет ${count} ${count % 10 < 5 ? 'символа' : 'символов'}`
       : undefined;
   };
 }
@@ -13,9 +11,7 @@ export function minLength(count: number) {
 export function maxLength(count: number) {
   return function (value: string) {
     return value.length > count
-      ? `Максимальная длина поля составляет ${count} ${
-          count % 10 < 5 ? 'символа' : 'символов'
-        }`
+      ? `Максимальная длина поля составляет ${count} ${count % 10 < 5 ? 'символа' : 'символов'}`
       : undefined;
   };
 }
@@ -23,9 +19,7 @@ export function maxLength(count: number) {
 export function length(count: number) {
   return function (value: string) {
     return value.length && value.length !== count
-      ? `Длина поля должна составлять ${count} ${
-          count % 10 < 5 ? 'символа' : 'символов'
-        }`
+      ? `Длина поля должна составлять ${count} ${count % 10 < 5 ? 'символа' : 'символов'}`
       : undefined;
   };
 }
@@ -58,6 +52,6 @@ export function removeEmptyValidators(object: any) {
 
 export function trimAll(object: any) {
   Object.keys(object).forEach(key => {
-    object[key] = object[key].trim().replace(/⠀/gi, '');
+    object[key] = object[key].toString().trim().replace(/⠀/gi, '');
   });
 }

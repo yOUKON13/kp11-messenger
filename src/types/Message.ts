@@ -10,4 +10,5 @@ export type Message = {
   isSystem: boolean;
   action?: string;
   target?: string;
+  attachments: Array<string>;
 };

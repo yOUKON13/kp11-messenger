@@ -15,8 +15,8 @@ type MessagesResponse = {
 };
 
 const MessagesAPI = {
-  send(content: string, chatId: string): Promise<Response<MessageResponse>> {
-    return instance.post(`/chats/${chatId}/messages`, { content }, { headers: newHeaders() });
+  send(data: object, chatId: string): Promise<Response<MessageResponse>> {
+    return instance.post(`/chats/${chatId}/messages`, data, { headers: newHeaders() });
   },
 
   get(chatId: string, page: number): Promise<Response<MessagesResponse>> {

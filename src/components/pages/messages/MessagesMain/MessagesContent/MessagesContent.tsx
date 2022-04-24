@@ -6,10 +6,12 @@ import {
   GetMessagesLoading,
   GetSendingMessages,
 } from '../../../../../store/reducers/Chat/ChatMessage/ChatMessageSelector';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GetMessagesF } from '../../../../../store/reducers/Chat/ChatMessage/ChatMessageReducer';
 import Message from './Message/Message';
 import useInfiniteScroll from '../../../../../hooks/useInfiniteScroll/useInfiniteScroll';
+import DragImages from './DragImages';
+import MessageAttachments from '../MessageAttachments/MessageAttachments';
 
 function MessagesContent() {
   const currentChat = useSelector(GetCurrentChat);
@@ -44,18 +46,22 @@ function MessagesContent() {
   }, [currentChat?._id]);
 
   return (
-    <div className="chat-messages flex-container" ref={messagesRef}>
-      {messages.map((message, index) => (
-        <Message
-          key={message._id}
-          sender={message.sender}
-          sendAt={message.sendAt}
-          content={message.content}
-          isSameSender={index < messages.length - 1 && messages[index + 1].sender._id === message.sender._id}
-          isSending={!!sendingMessages.find(msg => message.content === msg.content)}
-        />
-      ))}
-    </div>
+    <DragImages>
+      <div className="chat-messages flex-container" ref={messagesRef}>
+        {messages.map((message, index) => (
+          <Message
+            key={message._id}
+            sender={message.sender}
+            sendAt={message.sendAt}
+            content={message.content}
+            isSameSender={index < messages.length - 1 && messages[index + 1].sender._id === message.sender._id}
+            isSending={!!sendingMessages.find(msg => message.content === msg.content)}
+            attachments={message.attachments}
+          />
+        ))}
+      </div>
+      <MessageAttachments />
+    </DragImages>
   );
 }
 

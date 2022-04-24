@@ -15,16 +15,44 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex: 1;
+    position: relative;
     max-height: calc(100vh - var(--toolbar-height) - 12em);
+
+    .drag-images {
+      flex: 1;
+      flex-direction: column-reverse;
+      justify-content: stretch;
+      align-items: stretch;
+      width: 100%;
+      overflow: auto;
+      position: relative;
+
+      &::after {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: '';
+        border: 0.75em dashed transparent;
+        box-sizing: border-box;
+      }
+
+      &.dragging {
+        &::after {
+          border: 0.75em dashed var(--orange);
+        }
+      }
+    }
 
     .chat-messages {
       flex-direction: column-reverse;
       justify-content: flex-start;
       align-items: flex-start;
-      padding: 2.5em;
       flex: 1;
+      padding: 2.5em;
       overflow: auto;
-      width: 100%;
 
       .message {
         justify-content: flex-start;
@@ -46,7 +74,10 @@
         }
 
         &__content {
-          justify-content: flex-start;
+          .flex-container {
+            justify-content: space-between;
+          }
+
           background: var(--message-bg);
           padding: 1.5em;
           border-radius: 1em;
@@ -72,6 +103,92 @@
             line-height: 0;
           }
         }
+
+        &__image-attachments {
+          flex-wrap: wrap;
+          justify-content: flex-start !important;
+          align-items: flex-start;
+
+          .image-attachment {
+            user-select: none;
+            pointer-events: none;
+            margin: 1em;
+
+            img {
+              width: 25em;
+              height: auto;
+            }
+          }
+
+          .message__time {
+            flex-wrap: nowrap;
+            justify-content: flex-start !important;
+          }
+        }
+
+        &__attachment {
+          margin-bottom: 1em;
+          justify-content: flex-start !important;
+
+          i {
+            margin-right: 0.5em;
+            font-size: 2.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  .message-attachments {
+    position: absolute;
+    top: 1em;
+    padding: 0 2em;
+    flex-wrap: wrap;
+
+    &__attachment {
+      pointer-events: none;
+      height: 12.5em;
+      width: 12.5em;
+      background: var(--toolbar-bg);
+      border-radius: 1em;
+      animation-duration: 0.5s;
+      animation-name: bounceIn;
+      position: relative;
+      margin-bottom: 1em;
+
+      &:not(:last-child) {
+        margin-right: 2em;
+      }
+
+      img {
+        border-radius: 1em;
+        width: 100%;
+        height: 100%;
+      }
+
+      .flex-container {
+        flex-direction: column;
+        padding: 0.25em;
+
+        i {
+          font-size: 2.5rem;
+        }
+
+        .text-overflow {
+          max-width: 9em;
+          font-size: 1.25rem;
+        }
+      }
+
+      .attachment__remove {
+        pointer-events: auto;
+        position: absolute;
+        top: -0.25em;
+        right: -0.25em;
+
+        i {
+          font-size: 3rem;
+        }
       }
     }
   }
@@ -92,9 +209,16 @@
     }
   }
 
+  &__attachment-add {
+    input {
+      display: none;
+    }
+  }
+
   &__header {
     width: calc(100vw - 49em);
     position: relative;
+    z-index: 2;
 
     &.typing {
       > .text-overflow {
@@ -310,9 +434,12 @@
 @media screen and (max-width: 1000px) {
   .messages {
     &__header {
-      > button:not(:last-child),
       .messages__members-count {
         margin-right: 0.5em;
+      }
+
+      .messages__members {
+        margin-right: 1em;
       }
     }
   }

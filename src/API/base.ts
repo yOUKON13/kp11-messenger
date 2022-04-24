@@ -17,8 +17,8 @@ export function newHeaders() {
 const SERVER_PORT = '8080';
 const WS_PORT = '1488';
 
-export const server = `http://localhost:${SERVER_PORT}/`;
-export const wsServer = `ws://localhost:${WS_PORT}/`;
+export const server = `http://26.26.228.204:${SERVER_PORT}/`;
+export const wsServer = `ws://26.26.228.204:${WS_PORT}/`;
 
 const instance = axios.create({
   baseURL: server,

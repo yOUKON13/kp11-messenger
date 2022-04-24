@@ -46,7 +46,7 @@ const Chat: React.FC<PropType> = function ({ id, avatar, name, setLeaveWindowOpe
           {lastMessage && (
             <p className="chat__last-message text-overflow">
               {senderId === user?._id && <span className="gradient-text">Вы: </span>}
-              {lastMessage?.content}
+              {lastMessage.content || 'Вложения'}
             </p>
           )}
         </div>

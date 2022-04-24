@@ -6,12 +6,15 @@ import MessagesAPI from '../../../../API/MessagesAPI/MessagesAPI';
 import { socket } from '../../../store';
 import { ChatActions } from '../ChatReducer';
 import filterByProp from '../../../../utils/array';
+import { CreateMessage } from '../../App/AppReducer';
+import { makeFormData } from '../../../../utils/formData';
 
 const SET_MESSAGES = 'Messenger/ChatMessage/SET-MESSAGES';
 const ADD_MESSAGE = 'Messenger/ChatMessage/ADD-MESSAGE';
 const SET_LOADING = 'Messenger/ChatMessage/SET-LOADING';
 const SET_LAST_PAGE = 'Messenger/ChatMessage/SET-LAST-PAGE';
 const SET_SENDING_MESSAGES = 'Messenger/ChatMessage/SET-SENDING-MESSAGES';
+const SET_ATTACHMENTS = 'Messenger/ChatMessage/SET-ATTACHMENTS';
 
 type SendingMessage = {
   content: '';
@@ -22,6 +25,7 @@ const initState = {
   isLoading: false,
   isLastPage: false,
   sendingMessages: [] as Array<SendingMessage>,
+  attachments: [] as Array<File>,
 };
 type ChatMessageStateType = typeof initState;
 
@@ -54,6 +58,11 @@ const ChatMessageReducer: Reducer<ChatMessageStateType, Actions> = function (sta
         ...state,
         sendingMessages: action.payload.messages,
       };
+    case SET_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: action.payload.attachments,
+      };
 
     default:
       return state;
@@ -76,14 +85,54 @@ export const ChatMessageActions = {
   setSendingMessages(messages: Array<SendingMessage>) {
     return <const>{ type: SET_SENDING_MESSAGES, payload: { messages } };
   },
+  setAttachments(attachments: Array<File>) {
+    return <const>{ type: SET_ATTACHMENTS, payload: { attachments } };
+  },
 };
+
+export function SetAttachments(attachments: Array<File>) {
+  return async function (dispatch: Dispatch<any>, getState: any) {
+    if (attachments.length > 5) {
+      dispatch(CreateMessage('Максимально возможное количество файлов - 5'));
+      return;
+    }
+
+    for (const att of attachments) {
+      if (att.size > 20000000) {
+        dispatch(CreateMessage('Максимальный размер файла - 20Мб'));
+        return;
+      }
+    }
+
+    dispatch(ChatMessageActions.setAttachments(attachments));
+  };
+}
+
+export function RemoveAttachment(index: number) {
+  return async function (dispatch: Dispatch<any>, getState: any) {
+    dispatch(
+      ChatMessageActions.setAttachments(
+        getState().chat.message.attachments.filter((att, i) => {
+          return i !== index;
+        })
+      )
+    );
+  };
+}
 
 export function SendMessage(content: string, chatId: string) {
   return catchAsync(
     async (dispatch, getState) => {
       dispatch(ChatMessageActions.setSendingMessages([...getState().chat.message.sendingMessages, { content }]));
 
-      const result = await MessagesAPI.send(content, chatId);
+      const formData = makeFormData({ content });
+      const attachments = getState().chat.message.attachments;
+
+      for (const attachment of attachments) {
+        formData.append(attachment.name, attachment);
+      }
+
+      const result = await MessagesAPI.send(formData, chatId);
 
       if (result.data.status) {
         const message = result.data.data;
@@ -109,6 +158,7 @@ export function SendMessage(content: string, chatId: string) {
       const newArray = getState().chat.message.sendingMessages.filter((message: any) => message.content !== content);
 
       dispatch(ChatMessageActions.setSendingMessages(newArray));
+      dispatch(ChatMessageActions.setAttachments([]));
     }
   );
 }

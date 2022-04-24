@@ -12,7 +12,7 @@ const FileAttachment: React.FC<PropType> = function ({ attachment }) {
   return (
     <div className={`flex-container message__attachment file-attachment`}>
       <i className="fa-solid fa-file" />
-      <a href={`${server}${attachment}`}>
+      <a href={`${server}${attachment}`} download>
         <p className="gradient-text">{file}</p>
       </a>
     </div>
